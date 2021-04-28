@@ -35,7 +35,9 @@ export default class Print implements Instruccion{
        
             if (this.NoEsAsignacion){
                 let valor = this.expresion.getTipo(controlador,ts);
-                if ( valor === tipo.CADENA || valor === tipo.BOOLEANO ||  valor === tipo.ENTERO ||  valor === tipo.DOBLE ){   
+                console.log(valor)
+                if ( valor === tipo.CADENA || valor === tipo.BOOLEANO ||  valor === tipo.ENTERO ||  valor === tipo.DOBLE ||  valor === tipo.CARACTER){   
+                    //console.log(valor)
                     let valor2 = this.expresion.getValor(controlador,ts);                 
                     controlador.append(valor2);
                     }

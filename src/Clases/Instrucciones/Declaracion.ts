@@ -48,14 +48,16 @@ export default class Declaracion implements Instruccion{
 
                 //TODO: Verificar que el tipo del valor obtenido sea igual al de la declaracion 
                 let tipo_valor = variable.valor.getTipo(controlador,ts);
+
                 console.log(tipo_valor, this.type.type);
-                if(tipo_valor == this.type.type || (tipo_valor == tipo.DOBLE && this.type.type == tipo.ENTERO)){
+                if(tipo_valor == this.type.type || (tipo_valor == tipo.DOBLE && this.type.type == tipo.ENTERO) || (tipo_valor == tipo.CARACTER && this.type.type == tipo.CADENA)){
                     //--> Lo agregamos a la tabla de simbolos 
                    
                     let nuevo_simb = new Simbolos(variable.simbolo, this.type, variable.identificador, valor);
                     ts.agregar(variable.identificador, nuevo_simb);
-                    console.log("son del mismo tipo")
+                    console.log("Variable asignada")
                 }else{
+                    console.log("Variable no asignada, tipos diferentes")
                     //Error no se puede declarar por incopatibilidad de simbolos
                 }
                 

@@ -29,7 +29,11 @@ export default class  Primitivo implements Expresion{
         if(typeof valor === 'number'){   
             return tipo.DOBLE;
         }else if(typeof valor === 'string'){
-            return tipo.CADENA;
+            if (valor.length == 1){
+                return tipo.CARACTER
+            }else{
+                return tipo.CADENA;
+            }        
         }else if(typeof valor === 'boolean'){
             return tipo.BOOLEANO;
         }

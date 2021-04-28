@@ -1,3 +1,4 @@
+import { toTypeScript } from "@angular/compiler";
 import Nodo from "src/Clases/Ast/Nodo";
 import Controlador from "src/Clases/Controlador";
 import { Expresion } from "src/Clases/Interfaces/Expresion";
@@ -26,21 +27,21 @@ export default class While implements Instruccion{
         let valor_condicion = this.condicion.getValor(controlador, ts);
 
 
-        let ts_localx = new TablaSimbolos(ts);
-
-        for(let ins of this.lista_instrucciones){
-            let res = ins.ejecutar(controlador,ts_localx);
-            //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
-            if(ins instanceof Detener || res instanceof Detener ){
-                return res;
-            }
-
-        }
-
-
-
         
         if(typeof valor_condicion == 'boolean'){
+
+            console.log("accediendo a primer ciclo")
+            for(let ins of this.lista_instrucciones){
+
+                let ts_localx = new TablaSimbolos(ts);
+                let res = ins.ejecutar(controlador,ts_localx);
+                //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
+                if(ins instanceof Detener || res instanceof Detener ){
+                    return res;
+                }
+    
+            }
+
 
             while(this.condicion.getValor(controlador,ts)){
 

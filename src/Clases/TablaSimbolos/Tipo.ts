@@ -36,6 +36,8 @@ export default class Tipo{
             return tipo.BOOLEANO;
         }else if(stype == 'VOID'){
             return tipo.VOID;
+        }else if(stype == 'CARACTER'){
+            return tipo.CARACTER;
         }
     }
 

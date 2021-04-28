@@ -30,66 +30,66 @@ caracter     (\'({escape2}|{aceptada2})\')
 
 /* Simbolos del programa */
 
-"++"                    { console.log("Reconocio : "+ yytext); return 'INCRE'}
-"--"                    { console.log("Reconocio : "+ yytext); return 'DECRE'}
-"("                    { console.log("Reconocio : "+ yytext); return 'PARA'}
-")"                    { console.log("Reconocio : "+ yytext); return 'PARC'}
-"["                    { console.log("Reconocio : "+ yytext); return 'CORA'}
-"]"                    { console.log("Reconocio : "+ yytext); return 'CORC'}
+"++"                    { console.log("INCRE : "+ yytext); return 'INCRE'}
+"--"                    { console.log("DECRE : "+ yytext); return 'DECRE'}
+"("                    { console.log("PARA : "+ yytext); return 'PARA'}
+")"                    { console.log("PARC : "+ yytext); return 'PARC'}
+"["                    { console.log("CORA : "+ yytext); return 'CORA'}
+"]"                    { console.log("CORC : "+ yytext); return 'CORC'}
 
-";"                    { console.log("Reconocio : "+ yytext); return 'PYC'}
-","                    { console.log("Reconocio : "+ yytext); return 'COMA'}
-"!="                    { console.log("Reconocio : "+ yytext); return 'NOTIGUAL'}
-"=="                    { console.log("Reconocio : "+ yytext); return 'IGUALIGUAL'}
-"="                    { console.log("Reconocio : "+ yytext); return 'IGUAL'}
-"?"                    { console.log("Reconocio : "+ yytext); return 'INTERROGACION'}
-":"                    { console.log("Reconocio : "+ yytext); return 'DSPNTS'}
-"{"                    { console.log("Reconocio : "+ yytext); return 'LLAVA'}
-"}"                    { console.log("Reconocio : "+ yytext); return 'LLAVC'}
+";"                    { console.log("PYC : "+ yytext); return 'PYC'}
+","                    { console.log("COMA : "+ yytext); return 'COMA'}
+"!="                    { console.log("NOTIGUAL : "+ yytext); return 'NOTIGUAL'}
+"=="                    { console.log("IGUALIGUAL : "+ yytext); return 'IGUALIGUAL'}
+"="                    { console.log("IGUAL : "+ yytext); return 'IGUAL'}
+"?"                    { console.log("INTERROGACION : "+ yytext); return 'INTERROGACION'}
+":"                    { console.log("DSPNTS : "+ yytext); return 'DSPNTS'}
+"{"                    { console.log("LLAVA : "+ yytext); return 'LLAVA'}
+"}"                    { console.log("LLAVC : "+ yytext); return 'LLAVC'}
 
 /* Operadores Aritmeticos */
-"+"                    { console.log("Reconocio : "+ yytext); return 'MAS'}
-"-"                   { console.log("Reconocio : "+ yytext); return 'MENOS'}
-"*"                   { console.log("Reconocio : "+ yytext); return 'MULTI'}
-"/"                   { console.log("Reconocio : "+ yytext); return 'DIV'}
+"+"                    { console.log("MAS : "+ yytext); return 'MAS'}
+"-"                   { console.log("MENOS : "+ yytext); return 'MENOS'}
+"*"                   { console.log("MULTI : "+ yytext); return 'MULTI'}
+"/"                   { console.log("DIV : "+ yytext); return 'DIV'}
 
 /* Operadores Relacionales */
-"<="                   { console.log("Reconocio : "+ yytext); return 'MENORIGUAL'}
-"<"                    { console.log("Reconocio : "+ yytext); return 'MENORQUE'}
-">="                   { console.log("Reconocio : "+ yytext); return 'MAYORIGUAL'}
-">"                   { console.log("Reconocio : "+ yytext); return 'MAYORQUE'}
+"<="                   { console.log("MENORIGUAL : "+ yytext); return 'MENORIGUAL'}
+"<"                    { console.log("MENORQUE : "+ yytext); return 'MENORQUE'}
+">="                   { console.log("MAYORIGUAL : "+ yytext); return 'MAYORIGUAL'}
+">"                   { console.log("MAYORQUE : "+ yytext); return 'MAYORQUE'}
 
 /* Operadores Logicos */
-"&&"                    { console.log("Reconocio : "+ yytext); return 'AND'}
-"||"                    { console.log("Reconocio : "+ yytext); return 'OR'}
-"!"                   { console.log("Reconocio : "+ yytext); return 'NOT'}
+"&&"                    { console.log("AND : "+ yytext); return 'AND'}
+"||"                    { console.log("OR : "+ yytext); return 'OR'}
+"!"                   { console.log("NOT : "+ yytext); return 'NOT'}
 
 /* Palabras reservadas */
-"evaluar"               { console.log("Reconocio : "+ yytext); return 'EVALUAR'}
-"true"               { console.log("Reconocio : "+ yytext); return 'TRUE'}
-"false"               { console.log("Reconocio : "+ yytext); return 'FALSE'}
-"int"               { console.log("Reconocio : "+ yytext); return 'INT'}
-"double"               { console.log("Reconocio : "+ yytext); return 'DOUBLE'}
-"string"               { console.log("Reconocio : "+ yytext); return 'STRING'}
-"char"               { console.log("Reconocio : "+ yytext); return 'CHAR'}
-"boolean"               { console.log("Reconocio : "+ yytext); return 'BOOLEAN'}
-"print"               { console.log("Reconocio : "+ yytext); return 'PRINT'}
-"if"               { console.log("Reconocio : "+ yytext); return 'IF'}
-"do"               { console.log("Reconocio : "+ yytext); return 'DO'}
-"while"               { console.log("Reconocio : "+ yytext); return 'WHILE'}
-"for"               { console.log("Reconocio : "+ yytext); return 'FOR_CIC'}
-"else"               { console.log("Reconocio : "+ yytext); return 'ELSE'}
-"void"               { console.log("Reconocio : "+ yytext); return 'VOID'}
-"exec"               { console.log("Reconocio : "+ yytext); return 'EJECUTAR'}
-"break"               { console.log("Reconocio : "+ yytext); return 'BREAK'}
-"return"               { console.log("Reconocio : "+ yytext); return 'RETURN'}
+"evaluar"               { console.log("EVALUAR : "+ yytext); return 'EVALUAR'}
+"true"               { console.log("TRUE : "+ yytext); return 'TRUE'}
+"false"               { console.log("FALSE : "+ yytext); return 'FALSE'}
+"int"               { console.log("INT : "+ yytext); return 'INT'}
+"double"               { console.log("DOUBLE : "+ yytext); return 'DOUBLE'}
+"string"               { console.log("STRING : "+ yytext); return 'STRING'}
+"char"               { console.log("CHAR : "+ yytext); return 'CHAR'}
+"boolean"               { console.log("BOOLEAN : "+ yytext); return 'BOOLEAN'}
+"print"               { console.log("PRINT : "+ yytext); return 'PRINT'}
+"if"               { console.log("IF : "+ yytext); return 'IF'}
+"do"               { console.log("DO : "+ yytext); return 'DO'}
+"while"               { console.log("WHILE : "+ yytext); return 'WHILE'}
+"for"               { console.log("FOR_CIC : "+ yytext); return 'FOR_CIC'}
+"else"               { console.log("ELSE : "+ yytext); return 'ELSE'}
+"void"               { console.log("VOID : "+ yytext); return 'VOID'}
+"exec"               { console.log("EJECUTAR : "+ yytext); return 'EJECUTAR'}
+"break"               { console.log("BREAK : "+ yytext); return 'BREAK'}
+"return"               { console.log("RETURN : "+ yytext); return 'RETURN'}
 
 /* SIMBOLOS ER */
-[0-9]+("."[0-9]+)?\b        { console.log("Reconocio : "+ yytext); return 'DECIMAL'}
-{num}                    { console.log("Reconocio : "+ yytext); return 'ENTERO'}
-{id}                    { console.log("Reconocio : "+ yytext); return 'ID'}
-{cadena}                    { console.log("Reconocio : "+ yytext); return 'CADENA'}
-{caracter}                    { console.log("Reconocio : "+ yytext); return 'CHAR'}
+[0-9]+("."[0-9]+)?\b        { console.log("DECIMAL : "+ yytext); return 'DECIMAL'}
+{num}                    { console.log("ENTERO : "+ yytext); return 'ENTERO'}
+{id}                    { console.log("ID : "+ yytext); return 'ID'}
+{cadena}                    { console.log("CADENA : "+ yytext); return 'CADENA'}
+{caracter}                    { console.log("CHARVAR : "+ yytext); return 'CHARVAR'}
 
 /* Espacios */
 [\s\r\n\t]                  {/* skip whitespace */}
@@ -133,6 +133,7 @@ caracter     (\'({escape2}|{aceptada2})\')
     const Print = require('../Clases/Instrucciones/Print');
     const Ifs = require('../Clases/Instrucciones/SentenciaControl/Ifs');
     const While = require('../Clases/Instrucciones/SentenciaCiclica/While');
+    const DoWhile = require('../Clases/Instrucciones/SentenciaCiclica/DoWhile');
     const For = require('../Clases/Instrucciones/SentenciaCiclica/For');
 
     const funcion = require('../Clases/Instrucciones/Funcion');
@@ -175,6 +176,7 @@ instruccion : declaracion   { $$ = $1; }
             | print         { $$ = $1; }
             | sent_if       { $$ = $1; }
             | sent_while    { $$ = $1; } 
+            | sent_doWhile  { $$ = $1; } 
             | sent_for      { $$ = $1; }
             | funciones     { $$ = $1; }
             | llamada PYC   { $$ = $1; }
@@ -197,7 +199,7 @@ declaracion : tipo lista_simbolos PYC   { $$ = new declaracion.default($1, $2, @
 tipo : INT      { $$ = new tipo.default('ENTERO'); }
     | DOUBLE    { $$ = new tipo.default('DOBLE'); }
     | STRING    { $$ = new tipo.default('STRING'); }
-    | CHAR      { $$ = new tipo.default('CHAR'); }
+    | CHAR      { $$ = new tipo.default('CARACTER'); }
     | BOOLEAN   { $$ = new tipo.default('BOOLEAN'); }
     ;
 /**
@@ -231,7 +233,7 @@ sent_if : IF PARA e PARC LLAVA instrucciones LLAVC                              
 sent_while : WHILE PARA e PARC LLAVA instrucciones LLAVC { $$ = new While.default($3, $6, @1.first_line, @1.last_column); }
             ; 
 
-sent_doWhile : DO LLAVA instrucciones LLAVC WHILE PARA e PARC PYC { $$ = new While.default($3, $6, @1.first_line, @1.last_column); }
+sent_doWhile : DO LLAVA instrucciones LLAVC WHILE PARA e PARC PYC { $$ = new DoWhile.default($7, $3, @1.first_line, @1.last_column); }
             ; 
 
 sent_for :  FOR_CIC PARA declaracion e PYC asignacionFor  PARC LLAVA instrucciones LLAVC  { $$ = new For.default($3, $4, $6, $9,false, @1.first_line, @1.last_column); }
@@ -276,7 +278,7 @@ e :   e MAS e             {$$ = new aritmetica.default($1, '+', $3, $1.first_lin
     | DECIMAL           {$$ = new primitivo.default(Number(yytext), $1.first_line, $1.last_column);}
     | ENTERO            {$$ = new primitivo.default(Number(yytext), $1.first_line, $1.last_column);}
     | CADENA            {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, $1.first_line, $1.last_column);}
-    | CHAR           {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, $1.first_line, $1.last_column);}
+    | CHARVAR           {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, $1.first_line, $1.last_column);}
     | TRUE              {$$ = new primitivo.default(true, $1.first_line, $1.last_column);}
     | FALSE             {$$ = new primitivo.default(false, $1.first_line, $1.last_column);}
     | ID                {$$ = new identificador.default($1, @1.first_line, @1.last_column); }
