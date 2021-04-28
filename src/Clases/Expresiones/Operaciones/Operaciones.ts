@@ -12,6 +12,8 @@ export enum Operador {
     RESTA,
     MULTI,
     DIV,
+    POTENCIA,
+    MODULO,
     MENORQUE,
     MAYORQUE,
     AND,
@@ -90,6 +92,10 @@ export default class Operacion implements Expresion{
             return Operador.OR;
         }else if (op=='!='){
             return Operador.NOTIGUAL;
+        }else if (op=='^'){
+            return Operador.POTENCIA;
+        }else if (op=='%'){
+            return Operador.MODULO;
         }
     }
 

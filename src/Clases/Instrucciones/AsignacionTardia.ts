@@ -32,20 +32,20 @@ export default class Asignacion implements Instruccion{
             let tipo_valor = this.valor.getTipo(controlador,ts)
             //TODO: Validar si son del mismo tipo
             console.log(tipo_valor, ts.getSimbolo(this.identificador).tipo.type);
-            if(  (ts.getSimbolo(this.identificador).tipo.type == tipo.DOBLE && tipo_valor == tipo.ENTERO) || (ts.getSimbolo(this.identificador).tipo.type == tipo.ENTERO && tipo_valor == tipo.DOBLE)/**|| (tipo_valor == tipo.CARACTER && ts.getSimbolo(this.identificador).tipo.type == tipo.CADENA)**/){
+            if(  (ts.getSimbolo(this.identificador).tipo.type == tipo.DOBLE && tipo_valor == tipo.ENTERO) || (ts.getSimbolo(this.identificador).tipo.type == tipo.ENTERO && tipo_valor == tipo.DOBLE)|| (ts.getSimbolo(this.identificador).tipo.type == tipo.ENTERO && tipo_valor == tipo.ENTERO) || (ts.getSimbolo(this.identificador).tipo.type == tipo.DOBLE && tipo_valor == tipo.DOBLE)/**|| (tipo_valor == tipo.CARACTER && ts.getSimbolo(this.identificador).tipo.type == tipo.CADENA)**/){
                 let devolver = ValorIniciar.valor
                 ts.getSimbolo(this.identificador).setValor(valor + ValorIniciar.valor);
                 console.log("sumado exitosamente 1 con ++" + devolver)
                 return devolver
                 
             }else{
-                console.log("error al sumar 1 con ++")
+                console.log("error al sumar 1 con ++, el tipo de la variable no es correcto")
 
-                
+
             }
             
         }else{
-            console.log("error al sumar 1 con ++")
+            console.log("error al sumar 1 con ++, No existe el identificador")
             //TODO: reportar error no existe variable.
         }
     }

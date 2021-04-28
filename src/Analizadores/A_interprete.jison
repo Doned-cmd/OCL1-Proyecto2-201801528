@@ -49,6 +49,8 @@ caracter     (\'({escape2}|{aceptada2})\')
 
 /* Operadores Aritmeticos */
 "+"                    { console.log("MAS : "+ yytext); return 'MAS'}
+"^"                    { console.log("MAS : "+ yytext); return 'POTENCIA'}
+"%"                    { console.log("MAS : "+ yytext); return 'MODULO'}
 "-"                   { console.log("MENOS : "+ yytext); return 'MENOS'}
 "*"                   { console.log("MULTI : "+ yytext); return 'MULTI'}
 "/"                   { console.log("DIV : "+ yytext); return 'DIV'}
@@ -155,6 +157,8 @@ caracter     (\'({escape2}|{aceptada2})\')
 %left 'MENORQUE' 'MAYORQUE' 'IGUALIGUAL' 'MAYORIGUAL' 'NOTIGUAL' 'MENORIGUAL'
 %left 'MAS' 'MENOS'
 %left 'MULTI' 'DIV'
+%left 'POTENCIA'
+%left 'MODULO'
 %right 'UNARIO'
 
 
@@ -264,6 +268,8 @@ e :   e MAS e             {$$ = new aritmetica.default($1, '+', $3, $1.first_lin
     | e MENOS e         {$$ = new aritmetica.default($1, '-', $3, $1.first_line, $1.last_column, false);}
     | e MULTI e         {$$ = new aritmetica.default($1, '*', $3, $1.first_line, $1.last_column, false);}
     | e DIV e           {$$ = new aritmetica.default($1, '/', $3, $1.first_line, $1.last_column, false);}
+    | e MODULO e         {$$ = new aritmetica.default($1, '%', $3, $1.first_line, $1.last_column, false);}
+    | e POTENCIA e       {$$ = new aritmetica.default($1, '^', $3, $1.first_line, $1.last_column, false);}
     | e AND e           {$$ = new logica.default($1, '&&', $3, $1.first_line, $1.last_column, false);}
     | e OR e           {$$ = new logica.default($1, '&&', $3, $1.first_line, $1.last_column, false);}
     | NOT e             {$$ = new logica.default($2, '!', null, $1.first_line, $1.last_column, true);}

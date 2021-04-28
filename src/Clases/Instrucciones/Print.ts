@@ -34,11 +34,12 @@ export default class Print implements Instruccion{
         //let valor = this.expresion.getTipo(controlador,ts);
        
             if (this.NoEsAsignacion){
-                let valor = this.expresion.getTipo(controlador,ts);
-                console.log(valor)
-                if ( valor === tipo.CADENA || valor === tipo.BOOLEANO ||  valor === tipo.ENTERO ||  valor === tipo.DOBLE ||  valor === tipo.CARACTER){   
+                let valor2 = this.expresion.getValor(controlador,ts);
+                let valor_tipo = this.expresion.getTipo(controlador,ts);
+                //console.log(valor_tipo)
+                if ( valor_tipo === tipo.CADENA || valor_tipo === tipo.BOOLEANO ||  valor_tipo === tipo.ENTERO ||  valor_tipo === tipo.DOBLE ||  valor_tipo === tipo.CARACTER){   
                     //console.log(valor)
-                    let valor2 = this.expresion.getValor(controlador,ts);                 
+                    
                     controlador.append(valor2);
                     }
                 
