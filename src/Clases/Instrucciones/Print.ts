@@ -3,16 +3,24 @@ import Controlador from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
 import { TablaSimbolos } from "../TablaSimbolos/TablaSimbolos";
+import { tipo } from "../TablaSimbolos/Tipo";
 
 
 export default class Print implements Instruccion{
 
     public expresion : Expresion;
+    public instruccion : Instruccion;
+    public NoEsAsignacion :boolean;
     public linea : number;
     public columna : number;
 
-    constructor(expresion, linea, columna) {
-        this.expresion =expresion;
+    constructor(expresion ,NoEsAsignacion,linea, columna) {
+        if (NoEsAsignacion){
+            this.expresion =expresion;
+        }else{
+            this.instruccion = expresion;
+        }
+        this.NoEsAsignacion=NoEsAsignacion;
         this.linea = linea;
         this.columna = columna;
     }
@@ -22,9 +30,21 @@ export default class Print implements Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         //TODO: verificar que el tipo del valor sea primitivo 
-        let valor = this.expresion.getValor(controlador,ts);
-        controlador.append(valor);
-
+        
+        //let valor = this.expresion.getTipo(controlador,ts);
+       
+            if (this.NoEsAsignacion){
+                let valor = this.expresion.getTipo(controlador,ts);
+                if ( valor === tipo.CADENA || valor === tipo.BOOLEANO ||  valor === tipo.ENTERO ||  valor === tipo.DOBLE ){   
+                    let valor2 = this.expresion.getValor(controlador,ts);                 
+                    controlador.append(valor2);
+                    }
+                
+            }else{
+                let realizada = this.instruccion.ejecutar(controlador,ts)
+                controlador.append(realizada);                
+            }
+        
         return null;
     }
 

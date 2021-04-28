@@ -32,36 +32,57 @@ export default class Asignacion implements Instruccion{
     }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
+        console.log(this.EsAsignacion)
+        if(!this.EsAsignacion){           
 
-        let ts_local = new TablaSimbolos(ts);
-
-        
-        
-        //let variable = this.declaracion.getValor(controlador,ts)        
+            let ts_local = new TablaSimbolos(ts);
+            this.declaracion.ejecutar(controlador, ts_local)
+            //let valor_condicion = this.condicion.getValor(controlador,ts)
+            if (typeof this.condicion.getValor(controlador,ts_local) === 'boolean') {    
                 
-        this.declaracion.ejecutar(controlador, ts_local)
-        //let valor_condicion = this.condicion.getValor(controlador,ts)
-        if (typeof this.condicion.getValor(controlador,ts_local) === 'boolean') {    
-            
-            while(this.condicion.getValor(controlador,ts_local)){
-                let ts_local_ciclo = new TablaSimbolos(ts_local);
-                
-                if( this.iteracion.getTipo(controlador,ts_local) == "Asignacion"){
-                    //console.log(this.declaracion.getTipo(controlador,ts_local))
+                while(this.condicion.getValor(controlador,ts_local)){
+                    let ts_local_ciclo = new TablaSimbolos(ts_local);
                     
-                    
-                    this.iteracion.ejecutar(controlador,ts_local)
-                }
-                for(let ins of this.lista_instrucciones){
-                    let res = ins.ejecutar(controlador,ts_local_ciclo);
+                    if( this.iteracion.getTipo(controlador,ts_local) == "Asignacion"){
+                        //console.log(this.declaracion.getTipo(controlador,ts_local))
+                        this.iteracion.ejecutar(controlador,ts_local)
+                    }
+                    for(let ins of this.lista_instrucciones){
+                        let res = ins.ejecutar(controlador,ts_local_ciclo);
 
-                    //this.ejecutar(controlador,ts)
-                    if(ins instanceof Detener || res instanceof Detener ){
-                        return res;
-                    }                   
+                        //this.ejecutar(controlador,ts)
+                        if(ins instanceof Detener || res instanceof Detener ){
+                            return res;
+                        }                   
+                    }
+                    if( this.iteracion.getTipo(controlador,ts_local) == "AsignacionTardia"){
+                        this.iteracion.ejecutar(controlador,ts_local)
+                    }
                 }
-                if( this.iteracion.getTipo(controlador,ts_local) == "AsignacionTardia"){
-                    this.iteracion.ejecutar(controlador,ts_local)
+            }
+        }else{        
+            this.declaracion.ejecutar(controlador, ts)
+            //let valor_condicion = this.condicion.getValor(controlador,ts)
+            if (typeof this.condicion.getValor(controlador,ts) === 'boolean') {    
+                
+                while(this.condicion.getValor(controlador,ts)){
+                    let ts_local_ciclo = new TablaSimbolos(ts);
+                    
+                    if( this.iteracion.getTipo(controlador,ts) == "Asignacion"){
+                        //console.log(this.declaracion.getTipo(controlador,ts_local))
+                        this.iteracion.ejecutar(controlador,ts)
+                    }
+                    for(let ins of this.lista_instrucciones){
+                        let res = ins.ejecutar(controlador,ts_local_ciclo);
+
+                        //this.ejecutar(controlador,ts)
+                        if(ins instanceof Detener || res instanceof Detener ){
+                            return res;
+                        }                   
+                    }
+                    if( this.iteracion.getTipo(controlador,ts) == "AsignacionTardia"){
+                        this.iteracion.ejecutar(controlador,ts)
+                    }
                 }
             }
         }

@@ -30,8 +30,9 @@ export default class Asignacion implements Instruccion{
             let valor = this.valor.getValor(controlador,ts );
             
             //TODO: Validar si son del mismo tipo
-
+            let devolver = ValorIniciar.valor
             ts.getSimbolo(this.identificador).setValor(valor + ValorIniciar.valor);
+            return devolver
         }else{
             //TODO: reportar error no existe variable.
         }

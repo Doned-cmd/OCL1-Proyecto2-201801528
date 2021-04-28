@@ -75,12 +75,14 @@ caracter     (\'({escape2}|{aceptada2})\')
 "boolean"               { console.log("Reconocio : "+ yytext); return 'BOOLEAN'}
 "print"               { console.log("Reconocio : "+ yytext); return 'PRINT'}
 "if"               { console.log("Reconocio : "+ yytext); return 'IF'}
+"do"               { console.log("Reconocio : "+ yytext); return 'DO'}
 "while"               { console.log("Reconocio : "+ yytext); return 'WHILE'}
 "for"               { console.log("Reconocio : "+ yytext); return 'FOR_CIC'}
 "else"               { console.log("Reconocio : "+ yytext); return 'ELSE'}
 "void"               { console.log("Reconocio : "+ yytext); return 'VOID'}
 "exec"               { console.log("Reconocio : "+ yytext); return 'EJECUTAR'}
 "break"               { console.log("Reconocio : "+ yytext); return 'BREAK'}
+"return"               { console.log("Reconocio : "+ yytext); return 'RETURN'}
 
 /* SIMBOLOS ER */
 [0-9]+("."[0-9]+)?\b        { console.log("Reconocio : "+ yytext); return 'DECIMAL'}
@@ -178,6 +180,7 @@ instruccion : declaracion   { $$ = $1; }
             | llamada PYC   { $$ = $1; }
             | EJECUTAR llamada PYC { $$ = new ejecutar.default($2, @1.first_line, @1.last_column); }
             | BREAK PYC     { $$ = new detener.default(); }
+            | RETURN e PYC     { $$ = new detener.default(); }
             | error         { console.log("Error Sintactico" + yytext 
                                     + "linea: " + this._$.first_line 
                                     + "columna: " + this._$.first_column); 
@@ -214,8 +217,11 @@ asignacion : ID IGUAL e PYC   { $$ = new asignacion.default($1,$3, @1.first_line
             ; 
 
 asignacionFor : ID IGUAL e    { $$ = new asignacion.default($1,$3, @1.first_line, @1.last_column); }
-            | ID incremento            { $$ = new asignacionTardia.default($1,$2, @1.first_line, @1.last_column); }
+            |  devolverIncremento           { $$ = $1; }
             ; 
+
+devolverIncremento : ID incremento            { $$ = new asignacionTardia.default($1,$2, @1.first_line, @1.last_column); }
+            ;
 
 sent_if : IF PARA e PARC LLAVA instrucciones LLAVC                                  { $$ = new Ifs.default($3, $6, [], @1.first_line, @1.last_column); }
         | IF PARA e PARC LLAVA instrucciones LLAVC ELSE LLAVA instrucciones LLAVC   { $$ = new Ifs.default($3, $6, $10, @1.first_line, @1.last_column); }
@@ -225,12 +231,16 @@ sent_if : IF PARA e PARC LLAVA instrucciones LLAVC                              
 sent_while : WHILE PARA e PARC LLAVA instrucciones LLAVC { $$ = new While.default($3, $6, @1.first_line, @1.last_column); }
             ; 
 
+sent_doWhile : DO LLAVA instrucciones LLAVC WHILE PARA e PARC PYC { $$ = new While.default($3, $6, @1.first_line, @1.last_column); }
+            ; 
+
 sent_for :  FOR_CIC PARA declaracion e PYC asignacionFor  PARC LLAVA instrucciones LLAVC  { $$ = new For.default($3, $4, $6, $9,false, @1.first_line, @1.last_column); }
             |FOR_CIC PARA asignacion e PYC  asignacionFor  PARC LLAVA instrucciones LLAVC { $$ = new For.default($3, $4, $6, $9,true, @1.first_line, @1.last_column); }
             ;
 
-print : PRINT PARA e PARC PYC  {$$ = new Print.default($3, @1.first_line, @1.last_column); }
-    ; 
+print : PRINT PARA e PARC PYC                       {$$ = new Print.default($3, true,@1.first_line, @1.last_column); }
+        | PRINT PARA devolverIncremento PARC PYC    {$$ = new Print.default($3, false,@1.first_line, @1.last_column); }
+        ; 
 
 funciones : VOID ID PARA PARC LLAVA instrucciones LLAVC     { $$ = new funcion.default(3, new tipo.default('VOID'), $2, [], true, $6, @1.first_line, @1.last_column ); }
         | VOID ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { $$ = new funcion.default(3, new tipo.default('VOID'), $2, $4, true, $7, @1.first_line, @1.last_column ); }
@@ -266,7 +276,7 @@ e :   e MAS e             {$$ = new aritmetica.default($1, '+', $3, $1.first_lin
     | DECIMAL           {$$ = new primitivo.default(Number(yytext), $1.first_line, $1.last_column);}
     | ENTERO            {$$ = new primitivo.default(Number(yytext), $1.first_line, $1.last_column);}
     | CADENA            {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, $1.first_line, $1.last_column);}
-    | CHAR              {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, $1.first_line, $1.last_column);}
+    | CHAR           {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, $1.first_line, $1.last_column);}
     | TRUE              {$$ = new primitivo.default(true, $1.first_line, $1.last_column);}
     | FALSE             {$$ = new primitivo.default(false, $1.first_line, $1.last_column);}
     | ID                {$$ = new identificador.default($1, @1.first_line, @1.last_column); }
@@ -279,6 +289,9 @@ e :   e MAS e             {$$ = new aritmetica.default($1, '+', $3, $1.first_lin
 incremento:  INCRE          {$$ = new aritmetica.default(new primitivo.default(0, $1.first_line, $1.last_column),  '+', new primitivo.default(1, $1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
             | DECRE          {$$ = new aritmetica.default(new primitivo.default(0, $1.first_line, $1.last_column), '-', new primitivo.default(1, $1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
     ;
+
+
+
 //--> La siguiente produccion solo sirvio para fines de ejemplo en la clase 8
 //instruccion_clase8 : EVALUAR CORA e CORC PYC { $$ = new evaluar.default($3); }
  //           ;
