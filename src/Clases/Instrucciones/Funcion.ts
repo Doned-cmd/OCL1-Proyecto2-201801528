@@ -4,6 +4,8 @@ import { Instruccion } from "../Interfaces/Instruccion";
 import Simbolos from "../TablaSimbolos/Simbolos";
 import { TablaSimbolos } from "../TablaSimbolos/TablaSimbolos";
 import Tipo from "../TablaSimbolos/Tipo";
+import Detener from "./SentenciaTransferencia/Break";
+import Return from "./SentenciaTransferencia/Return";
 
 
 export default class Funcion extends Simbolos implements Instruccion{
@@ -36,9 +38,11 @@ export default class Funcion extends Simbolos implements Instruccion{
         for(let ins of this.lista_instrucciones){
             let r = ins.ejecutar(controlador,ts_local);
 
-            if(r != null){
-                return r;
-            }
+            if ( r instanceof Return ){
+                if(r != null){
+                    return r;
+                }
+            } 
 
         }
         return null;

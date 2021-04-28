@@ -248,17 +248,23 @@ break;
 case 63:
 this.$ = $$[$0-1];
 break;
-case 64: case 65:
-this.$ = new primitivo.default(Number(yytext), $$[$0].first_line, $$[$0].last_column);
+case 64:
+this.$ = new primitivo.default(Number(yytext), 1,$$[$0].first_line, $$[$0].last_column);
 break;
-case 66: case 67:
-$$[$0] = $$[$0].slice(1, $$[$0].length-1); this.$ = new primitivo.default($$[$0], $$[$0].first_line, $$[$0].last_column);
+case 65:
+this.$ = new primitivo.default(Number(yytext), 0,$$[$0].first_line, $$[$0].last_column);
+break;
+case 66:
+$$[$0] = $$[$0].slice(1, $$[$0].length-1); this.$ = new primitivo.default($$[$0], 4,$$[$0].first_line, $$[$0].last_column);
+break;
+case 67:
+$$[$0] = $$[$0].slice(1, $$[$0].length-1); this.$ = new primitivo.default($$[$0], 3,$$[$0].first_line, $$[$0].last_column);
 break;
 case 68:
-this.$ = new primitivo.default(true, $$[$0].first_line, $$[$0].last_column);
+this.$ = new primitivo.default(true, 2,$$[$0].first_line, $$[$0].last_column);
 break;
 case 69:
-this.$ = new primitivo.default(false, $$[$0].first_line, $$[$0].last_column);
+this.$ = new primitivo.default(false, 2,$$[$0].first_line, $$[$0].last_column);
 break;
 case 70:
 this.$ = new identificador.default($$[$0], _$[$0].first_line, _$[$0].last_column); 
@@ -267,10 +273,10 @@ case 71:
 this.$ = new ternario.default($$[$0-4], $$[$0-2], $$[$0], _$[$0-4].first_line, _$[$0-4].last_column); 
 break;
 case 72:
-this.$ = new aritmetica.default(new primitivo.default(0, $$[$0].first_line, $$[$0].last_column),  '+', new primitivo.default(1, $$[$0].first_line, $$[$0].last_column), $$[$0].first_line, $$[$0].last_column, false);
+this.$ = new aritmetica.default(new primitivo.default(0, 0,$$[$0].first_line, $$[$0].last_column),  '+', new primitivo.default(1, 0,$$[$0].first_line, $$[$0].last_column), $$[$0].first_line, $$[$0].last_column, false);
 break;
 case 73:
-this.$ = new aritmetica.default(new primitivo.default(0, $$[$0].first_line, $$[$0].last_column), '-', new primitivo.default(1, $$[$0].first_line, $$[$0].last_column), $$[$0].first_line, $$[$0].last_column, false);
+this.$ = new aritmetica.default(new primitivo.default(0, 0,$$[$0].first_line, $$[$0].last_column), '-', new primitivo.default(1, 0,$$[$0].first_line, $$[$0].last_column), $$[$0].first_line, $$[$0].last_column, false);
 break;
 }
 },
@@ -1002,7 +1008,7 @@ case 53: console.log("Error Lexico "+yy_.yytext
 break;
 }
 },
-rules: [/^(?:\/\/.*)/i,/^(?:\/\*((\*+[^/*])|([^*]))*\**\*\/)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\[)/i,/^(?:\])/i,/^(?:;)/i,/^(?:,)/i,/^(?:!=)/i,/^(?:==)/i,/^(?:=)/i,/^(?:\?)/i,/^(?::)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:<=)/i,/^(?:<)/i,/^(?:>=)/i,/^(?:>)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:!)/i,/^(?:evaluar\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:string\b)/i,/^(?:char\b)/i,/^(?:boolean\b)/i,/^(?:print\b)/i,/^(?:if\b)/i,/^(?:do\b)/i,/^(?:while\b)/i,/^(?:for\b)/i,/^(?:else\b)/i,/^(?:void\b)/i,/^(?:exec\b)/i,/^(?:break\b)/i,/^(?:return\b)/i,/^(?:[0-9]+(\.[0-9]+)?\b)/i,/^(?:([0-9]+))/i,/^(?:([a-zñA-ZÑ_][a-zñA-ZÑ0-9_]*))/i,/^(?:(("((\\([\'\"\\ntr]))|([^\"\\]+))*")))/i,/^(?:(('((\\([\\ntr]))|([^\'\\]))')))/i,/^(?:[\s\r\n\t])/i,/^(?:$)/i,/^(?:.)/i],
+rules: [/^(?:\/\/.*)/i,/^(?:\/\*((\*+[^/*])|([^*]))*\**\*\/)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\[)/i,/^(?:\])/i,/^(?:;)/i,/^(?:,)/i,/^(?:!=)/i,/^(?:==)/i,/^(?:=)/i,/^(?:\?)/i,/^(?::)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:<=)/i,/^(?:<)/i,/^(?:>=)/i,/^(?:>)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:!)/i,/^(?:evaluar\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:string\b)/i,/^(?:char\b)/i,/^(?:boolean\b)/i,/^(?:print\b)/i,/^(?:if\b)/i,/^(?:do\b)/i,/^(?:while\b)/i,/^(?:for\b)/i,/^(?:else\b)/i,/^(?:void\b)/i,/^(?:exec\b)/i,/^(?:break\b)/i,/^(?:return\b)/i,/^(?:[0-9]+(\.[0-9]+)\b)/i,/^(?:[0-9]+)/i,/^(?:([a-zñA-ZÑ_][a-zñA-ZÑ0-9_]*))/i,/^(?:(("((\\([\'\"\\ntr]))|([^\"\\]+))*")))/i,/^(?:(('((\\([\\ntr]))|([^\'\\]))')))/i,/^(?:[\s\r\n\t])/i,/^(?:$)/i,/^(?:.)/i],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53],"inclusive":true}}
 });
 return lexer;

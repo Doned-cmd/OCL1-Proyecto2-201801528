@@ -85,8 +85,8 @@ caracter     (\'({escape2}|{aceptada2})\')
 "return"               { console.log("RETURN : "+ yytext); return 'RETURN'}
 
 /* SIMBOLOS ER */
-[0-9]+("."[0-9]+)?\b        { console.log("DECIMAL : "+ yytext); return 'DECIMAL'}
-{num}                    { console.log("ENTERO : "+ yytext); return 'ENTERO'}
+[0-9]+("."[0-9]+)\b        { console.log("DECIMAL : "+ yytext); return 'DECIMAL'}
+[0-9]+                    { console.log("ENTERO : "+ yytext); return 'ENTERO'}
 {id}                    { console.log("ID : "+ yytext); return 'ID'}
 {cadena}                    { console.log("CADENA : "+ yytext); return 'CADENA'}
 {caracter}                    { console.log("CHARVAR : "+ yytext); return 'CHARVAR'}
@@ -275,12 +275,12 @@ e :   e MAS e             {$$ = new aritmetica.default($1, '+', $3, $1.first_lin
     | e NOTIGUAL e      {$$ = new relacional.default($1, '!=', $3, $1.first_line, $1.last_column, false);}
     | MENOS e %prec UNARIO {$$ = new aritmetica.default($2, 'UNARIO', null, $1.first_line, $1.last_column, true);}
     | PARA e PARC       {$$ = $2;}
-    | DECIMAL           {$$ = new primitivo.default(Number(yytext), $1.first_line, $1.last_column);}
-    | ENTERO            {$$ = new primitivo.default(Number(yytext), $1.first_line, $1.last_column);}
-    | CADENA            {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, $1.first_line, $1.last_column);}
-    | CHARVAR           {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, $1.first_line, $1.last_column);}
-    | TRUE              {$$ = new primitivo.default(true, $1.first_line, $1.last_column);}
-    | FALSE             {$$ = new primitivo.default(false, $1.first_line, $1.last_column);}
+    | DECIMAL           {$$ = new primitivo.default(Number(yytext), 1,$1.first_line, $1.last_column);}
+    | ENTERO            {$$ = new primitivo.default(Number(yytext), 0,$1.first_line, $1.last_column);}
+    | CADENA            {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, 4,$1.first_line, $1.last_column);}
+    | CHARVAR           {$1 = $1.slice(1, $1.length-1); $$ = new primitivo.default($1, 3,$1.first_line, $1.last_column);}
+    | TRUE              {$$ = new primitivo.default(true, 2,$1.first_line, $1.last_column);}
+    | FALSE             {$$ = new primitivo.default(false, 2,$1.first_line, $1.last_column);}
     | ID                {$$ = new identificador.default($1, @1.first_line, @1.last_column); }
     | e INTERROGACION e DSPNTS e {$$ = new ternario.default($1, $3, $5, @1.first_line, @1.last_column); } 
     //| INCRE          {$$ = new aritmetica.default(new primitivo.default(1, $1.first_line, $1.last_column), $1.first_line, $1.last_column, false), '+', new primitivo.default(1, $1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
@@ -288,12 +288,9 @@ e :   e MAS e             {$$ = new aritmetica.default($1, '+', $3, $1.first_lin
     //| incremento        {$$ = $1}
     ;
 
-incremento:  INCRE          {$$ = new aritmetica.default(new primitivo.default(0, $1.first_line, $1.last_column),  '+', new primitivo.default(1, $1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
-            | DECRE          {$$ = new aritmetica.default(new primitivo.default(0, $1.first_line, $1.last_column), '-', new primitivo.default(1, $1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
+incremento:  INCRE          {$$ = new aritmetica.default(new primitivo.default(0, 0,$1.first_line, $1.last_column),  '+', new primitivo.default(1, 0,$1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
+            | DECRE          {$$ = new aritmetica.default(new primitivo.default(0, 0,$1.first_line, $1.last_column), '-', new primitivo.default(1, 0,$1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
     ;
 
 
 
-//--> La siguiente produccion solo sirvio para fines de ejemplo en la clase 8
-//instruccion_clase8 : EVALUAR CORA e CORC PYC { $$ = new evaluar.default($3); }
- //           ;

@@ -8,6 +8,7 @@ import { tipo } from "../TablaSimbolos/Tipo";
 export default class  Primitivo implements Expresion{
 
     public primitivo : any; 
+    public tipo : any; 
     public linea : number;
     public columna : number;
 
@@ -17,7 +18,8 @@ export default class  Primitivo implements Expresion{
      * @param linea idica la linea donde se encuentra
      * @param columna indica la columna donde se encuentra
      */
-    constructor(primitivo : any, linea: number, columna : number) {
+    constructor(primitivo : any, tipo: number ,linea: number, columna : number) {
+        this.tipo = tipo;
         this.columna = columna;
         this.linea = linea;
         this.primitivo = primitivo;
@@ -26,17 +28,18 @@ export default class  Primitivo implements Expresion{
     getTipo(controlador: Controlador, ts: TablaSimbolos) :tipo {
         let valor = this.getValor(controlador, ts);
 
-        if(typeof valor === 'number'){   
-            return tipo.DOBLE;
-        }else if(typeof valor === 'string'){
-            if (valor.length == 1){
-                return tipo.CARACTER
-            }else{
-                return tipo.CADENA;
-            }        
-        }else if(typeof valor === 'boolean'){
-            return tipo.BOOLEANO;
-        }
+        //if(typeof valor === 'number'){   
+        //    return tipo.DOBLE;
+        //}else if(typeof valor === 'string'){
+        //    if (valor.length == 1){
+        //        return tipo.CARACTER
+        //    }else{
+        //        return tipo.CADENA;
+        //    }        
+        //}else if(typeof valor === 'boolean'){
+        //    return tipo.BOOLEANO;
+        //}
+        return this.tipo
     }
 
     /**

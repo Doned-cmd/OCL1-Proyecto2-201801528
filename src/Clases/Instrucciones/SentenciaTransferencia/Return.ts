@@ -5,7 +5,7 @@ import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 
 
-export default class Detener implements Instruccion{
+export default class Return implements Instruccion{
 
     valor :Expression
     constructor() { }
