@@ -11,7 +11,7 @@ export interface Instruccion {
      */
     ejecutar(controlador : Controlador, ts : TablaSimbolos);
 
-    getTipo(controlador : Controlador, ts : TablaSimbolos) : string;
+    getTipo(controlador : Controlador, ts : TablaSimbolos) : any;
     /**
      * @function recorrer crea y retorna el subarbol de la instruccion
      */

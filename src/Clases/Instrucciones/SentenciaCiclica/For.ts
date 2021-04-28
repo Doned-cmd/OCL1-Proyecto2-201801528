@@ -86,6 +86,7 @@ export default class Asignacion implements Instruccion{
                 }
             }
         }
+        return null
     }
     recorrer(): Nodo {
         throw new Error("Method not implemented.");

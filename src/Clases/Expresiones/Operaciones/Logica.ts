@@ -41,10 +41,18 @@ export default class Logica extends Operacion implements Expresion{
          */
         switch (this.operador) {
             case Operador.AND:
-                if(typeof valor_exp1 == 'boolean'){
+                if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.BOOLEANO){
                     if(typeof valor_exp2 == 'boolean'){
                         return valor_exp1 && valor_exp2;
-                    }//TODO: Agregar errores
+                    }else{
+                        return valor_exp1 && true;
+                    }
+                }else{
+                    if(typeof valor_exp2 == 'boolean'){
+                        return true && valor_exp2;
+                    }else{
+                        return true && true;
+                    }                    
                 }
                 break;
             case Operador.NOT:
@@ -58,8 +66,17 @@ export default class Logica extends Operacion implements Expresion{
                 if(typeof valor_exp1 == 'boolean'){
                     if(typeof valor_exp2 == 'boolean'){
                         return valor_exp1 || valor_exp2;
+                    }else{
+                        return valor_exp1 || true;
                     }
+                }else{
+                    if(typeof valor_exp2 == 'boolean'){
+                        return true || valor_exp2;
+                    }else{
+                        return true || true;
+                    }                    
                 }
+
                 break;
                             
             default:

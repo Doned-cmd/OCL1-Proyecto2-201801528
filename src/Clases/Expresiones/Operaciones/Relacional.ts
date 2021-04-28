@@ -44,44 +44,42 @@ export default class Relacional extends Operacion implements Expresion{
                 if(typeof valor_exp1 === 'number'){
                     if(typeof valor_exp2 === 'number'){
                         return valor_exp1 < valor_exp2;
-                    }else if(typeof valor_exp2 == 'string'){
-                        if(valor_exp2.length == 1){
-                            let num_ascii = valor_exp2.charCodeAt(0);
-                            return valor_exp1 < num_ascii;
-                        }else{
-                            // TODO: agregar error
-                        }
+                    }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
+                        let num_ascii = valor_exp2.charCodeAt(0);
+                        return valor_exp1 < num_ascii;
+                        
                     }//TODO: agregar los otros casos de errores
-                }
-                else if(typeof valor_exp1 === 'string'){
+                }else if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){
                     let num_ascii = valor_exp1.charCodeAt(0);
 
                     if(typeof valor_exp2 === 'number'){
                         return num_ascii < valor_exp2;
-                    }else if(typeof valor_exp2 == 'string'){
-                        if(valor_exp2.length == 1){
-                            let num_ascii2 = valor_exp2.charCodeAt(0);
-                            return num_ascii < num_ascii2;
-                        }else{
-                            // TODO: agregar error
-                        }
+                    }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
+                        let num_ascii2 = valor_exp2.charCodeAt(0);
+                        return num_ascii < num_ascii2;                        
                     }//TODO: agregar los otros casos de errores
                 }
                 
                 break;
             case Operador.MAYORQUE:
-                    if(typeof valor_exp1 === 'number'){
-                        if(typeof valor_exp2 === 'number'){
-                            return valor_exp1 > valor_exp2;
-                        }else if(typeof valor_exp2 == 'string'){
-                            if(valor_exp2.length == 1){
-                                let num_ascii = valor_exp2.charCodeAt(0);
-                                return valor_exp1 > num_ascii;
-                            }else{
-                                // TODO: agregar error
-                            }
-                        }//TODO: agregar los otros casos de errores
-                    }
+                if(typeof valor_exp1 === 'number'){
+                    if(typeof valor_exp2 === 'number'){
+                        return valor_exp1 > valor_exp2;
+                    }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
+                        let num_ascii = valor_exp2.charCodeAt(0);
+                        return valor_exp1 > num_ascii;
+                        
+                    }//TODO: agregar los otros casos de errores
+                }else if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){
+                    let num_ascii = valor_exp1.charCodeAt(0);
+
+                    if(typeof valor_exp2 === 'number'){
+                        return num_ascii > valor_exp2;
+                    }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
+                        let num_ascii2 = valor_exp2.charCodeAt(0);
+                        return num_ascii > num_ascii2;                        
+                    }//TODO: agregar los otros casos de errores
+                }
                     
                     break;
             case Operador.IGUALIGUAL:
@@ -99,29 +97,47 @@ export default class Relacional extends Operacion implements Expresion{
                 }
                 break;
             case Operador.MAYORIGUAL:
-                    if(typeof valor_exp1 === 'number'){
-                        if(typeof valor_exp2 === 'number'){
-                            return valor_exp1 >= valor_exp2;
-                        }
-                    }
+                if(typeof valor_exp1 === 'number'){
+                    if(typeof valor_exp2 === 'number'){
+                        return valor_exp1 >= valor_exp2;
+                    }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
+                        let num_ascii = valor_exp2.charCodeAt(0);
+                        return valor_exp1 >= num_ascii;
+                        
+                    }//TODO: agregar los otros casos de errores
+                }else if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){
+                    let num_ascii = valor_exp1.charCodeAt(0);
+
+                    if(typeof valor_exp2 === 'number'){
+                        return num_ascii >= valor_exp2;
+                    }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
+                        let num_ascii2 = valor_exp2.charCodeAt(0);
+                        return num_ascii >= num_ascii2;                        
+                    }//TODO: agregar los otros casos de errores
+                }
                     break;
+
             case Operador.MENORIGUAL:
                 if(typeof valor_exp1 === 'number'){
                     if(typeof valor_exp2 === 'number'){
                         return valor_exp1 <= valor_exp2;
-                    }else if(typeof valor_exp2 == 'string'){
-                        if(valor_exp2.length == 1){
-                            let num_ascii = valor_exp2.charCodeAt(0);
-                            return valor_exp1 <= num_ascii;
-                        }else{
-                            // TODO: agregar error
-                        }
+                    }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
+                        let num_ascii = valor_exp2.charCodeAt(0);
+                        return valor_exp1 <= num_ascii;
+                        
+                    }//TODO: agregar los otros casos de errores
+                }else if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){
+                    let num_ascii = valor_exp1.charCodeAt(0);
+
+                    if(typeof valor_exp2 === 'number'){
+                        return num_ascii <= valor_exp2;
+                    }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
+                        let num_ascii2 = valor_exp2.charCodeAt(0);
+                        return num_ascii <= num_ascii2;                        
                     }//TODO: agregar los otros casos de errores
                 }
                 
-                break
-            
-            // TODO: Agregar mas casos de relacionales (IGUALIGUAL, DIFERENCIA,)
+                break;                  
             default:
                 break;
         }

@@ -68,7 +68,7 @@ export default class Declaracion implements Instruccion{
             }
 
         }
-
+        return null
     }
 
     recorrer(): Nodo {

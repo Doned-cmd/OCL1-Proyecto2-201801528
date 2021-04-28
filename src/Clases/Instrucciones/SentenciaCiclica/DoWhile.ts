@@ -57,6 +57,7 @@ export default class While implements Instruccion{
                 }
             }
         }
+        return null;
     }
     
     recorrer(): Nodo {

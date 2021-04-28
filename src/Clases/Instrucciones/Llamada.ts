@@ -42,6 +42,7 @@ export default class Llamada implements Instruccion{
         }else{
             //TODO: reportar error semantico
         }
+        return null
     }
     recorrer(): Nodo {
         let padre = new Nodo("Llamada",""); 

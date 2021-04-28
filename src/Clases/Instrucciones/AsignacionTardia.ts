@@ -48,6 +48,7 @@ export default class Asignacion implements Instruccion{
             console.log("error al sumar 1 con ++, No existe el identificador")
             //TODO: reportar error no existe variable.
         }
+        return null
     }
     recorrer(): Nodo {
         throw new Error("Method not implemented.");

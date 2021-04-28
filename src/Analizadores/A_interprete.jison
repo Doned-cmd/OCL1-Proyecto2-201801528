@@ -77,6 +77,9 @@ caracter     (\'({escape2}|{aceptada2})\')
 "boolean"               { console.log("BOOLEAN : "+ yytext); return 'BOOLEAN'}
 "print"               { console.log("PRINT : "+ yytext); return 'PRINT'}
 "if"               { console.log("IF : "+ yytext); return 'IF'}
+"switch"               { console.log("SWITCH : "+ yytext); return 'SWITCH'}
+"case"               { console.log("CASE : "+ yytext); return 'CASE'}
+"default"               { console.log("DEFAULT : "+ yytext); return 'DEFAULT'}
 "do"               { console.log("DO : "+ yytext); return 'DO'}
 "while"               { console.log("WHILE : "+ yytext); return 'WHILE'}
 "for"               { console.log("FOR_CIC : "+ yytext); return 'FOR_CIC'}
@@ -134,6 +137,9 @@ caracter     (\'({escape2}|{aceptada2})\')
 
     const Print = require('../Clases/Instrucciones/Print');
     const Ifs = require('../Clases/Instrucciones/SentenciaControl/Ifs');
+    const Switch = require('../Clases/Instrucciones/SentenciaControl/Switch');
+    const Case_SW = require('../Clases/Instrucciones/SentenciaControl/Case_SW');
+    const Default_SW = require('../Clases/Instrucciones/SentenciaControl/Default_SW');
     const While = require('../Clases/Instrucciones/SentenciaCiclica/While');
     const DoWhile = require('../Clases/Instrucciones/SentenciaCiclica/DoWhile');
     const For = require('../Clases/Instrucciones/SentenciaCiclica/For');
@@ -179,7 +185,8 @@ instruccion : declaracion   { $$ = $1; }
             | asignacion    { $$ = $1; }
             | print         { $$ = $1; }
             | sent_if       { $$ = $1; }
-            | sent_while    { $$ = $1; } 
+            | sent_switch   { $$ = $1; } 
+            | sent_while    { $$ = $1; }            
             | sent_doWhile  { $$ = $1; } 
             | sent_for      { $$ = $1; }
             | funciones     { $$ = $1; }
@@ -234,6 +241,17 @@ sent_if : IF PARA e PARC LLAVA instrucciones LLAVC                              
         | IF PARA e PARC LLAVA instrucciones LLAVC ELSE sent_if                     { $$ = new Ifs.default($3, $6, [$9], @1.first_line, @1.last_column); }
         ;
  
+sent_switch : SWITCH PARA e PARC LLAVA switch_case LLAVC { $$ = new Switch.default($3, $6, @1.first_line, @1.last_column); }
+             
+            ; 
+
+
+
+switch_case : switch_case CASE e DSPNTS  instrucciones  BREAK PYC    { $$ = $1; $$.push(new Case_SW.default($3, $5, @1.first_line, @1.last_column)); }
+            | switch_case DEFAULT  DSPNTS  instrucciones  BREAK PYC   { $$ = $1; $$.push(new Default_SW.default( $4, @1.first_line, @1.last_column)); }
+            | CASE e DSPNTS  instrucciones BREAK PYC     { $$ = new Array(); $$.push( new Case_SW.default($2, $4, @1.first_line, @1.last_column) ); } //{console.log("Caso detectado")}        
+            ;            
+        
 sent_while : WHILE PARA e PARC LLAVA instrucciones LLAVC { $$ = new While.default($3, $6, @1.first_line, @1.last_column); }
             ; 
 
