@@ -1,5 +1,6 @@
 import Nodo from "../Ast/Nodo";
 import Controlador from "../Controlador";
+//import ValorDevuelto from "../Expresiones/ValorDevuelto";
 import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
 import { TablaSimbolos } from "../TablaSimbolos/TablaSimbolos";
@@ -32,20 +33,26 @@ export default class Print implements Instruccion{
         //TODO: verificar que el tipo del valor sea primitivo 
         
         //let valor = this.expresion.getTipo(controlador,ts);
-       
+            
             if (this.NoEsAsignacion){
+                console.log("imprimiendo valor primitivo")
+                
                 let valor2 = this.expresion.getValor(controlador,ts);
+                
+                
                 let valor_tipo = this.expresion.getTipo(controlador,ts);
                 //console.log(valor_tipo)
                 if ( valor_tipo === tipo.CADENA || valor_tipo === tipo.BOOLEANO ||  valor_tipo === tipo.ENTERO ||  valor_tipo === tipo.DOBLE ||  valor_tipo === tipo.CARACTER){   
-                    //console.log(valor)
-                    
-                    controlador.append(valor2);
-                    }
+                    //console.log(valor)                                    
+                    controlador.append(valor2); 
+                }else{
                 
-            }else{
-                let realizada = this.instruccion.ejecutar(controlador,ts)
-                controlador.append(realizada);                
+
+                    console.log("Error al imprimir datos")
+                    //let realizada = this.instruccion.ejecutar(controlador,ts)
+                    //controlador.append(realizada);                
+                }
+                
             }
         
         return null;

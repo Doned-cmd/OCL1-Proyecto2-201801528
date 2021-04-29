@@ -83,17 +83,13 @@ export default class Relacional extends Operacion implements Expresion{
                     
                     break;
             case Operador.IGUALIGUAL:
-                if(typeof valor_exp1 === 'number'){
-                    if(typeof valor_exp2 === 'number'){
-                        return valor_exp1 == valor_exp2;
-                    }
+                if(this.exp1.getTipo(Controlador,TablaSimbolos) == this.exp2.getTipo(Controlador,TablaSimbolos)){
+                    return valor_exp1 == valor_exp2;
                 }
                 break;
             case Operador.NOTIGUAL:
-                if(typeof valor_exp1 === 'number'){
-                    if(typeof valor_exp2 === 'number'){
-                        return valor_exp1 != valor_exp2;
-                    }
+                if(this.exp1.getTipo(Controlador,TablaSimbolos) == this.exp2.getTipo(Controlador,TablaSimbolos)){                    
+                    return valor_exp1 != valor_exp2;                    
                 }
                 break;
             case Operador.MAYORIGUAL:

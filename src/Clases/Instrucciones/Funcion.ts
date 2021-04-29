@@ -38,8 +38,10 @@ export default class Funcion extends Simbolos implements Instruccion{
         for(let ins of this.lista_instrucciones){
             let r = ins.ejecutar(controlador,ts_local);
 
-            if ( r instanceof Return ){
+            if ( r instanceof Return || ins instanceof Return){
                 if(r != null){
+                    console.log("la funcion esta devolviendo")
+                    console.log(r)
                     return r;
                 }
             } 

@@ -15,7 +15,7 @@ export default class Aritmetica extends Operacion  implements Expresion {
     }
 
     getTipo(controlador: Controlador, ts: TablaSimbolos) : tipo{
-        let valor = this.getValor(controlador, ts);
+        //let valor = this.getValor(controlador, ts);
 
         //if(typeof valor === 'number'){   
         //    return tipo.DOBLE;
