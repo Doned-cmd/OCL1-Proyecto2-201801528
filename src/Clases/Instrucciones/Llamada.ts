@@ -28,10 +28,10 @@ export default class Llamada implements Instruccion{
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         //Verificar si la funcion/metodo existe 
 
-        if(ts.existe(this.identificador)){
+        if(ts.existe(this.identificador.toLowerCase())){
             let ts_local = new TablaSimbolos(ts);
 
-            let simbolo_funcion = ts.getSimbolo(this.identificador) as Funcion;
+            let simbolo_funcion = ts.getSimbolo(this.identificador.toLowerCase()) as Funcion;
             
             //TODO: Hacer un metodo para validar si los parametros de la llamada son del mismo tipo que el de la funcion
             
@@ -70,13 +70,14 @@ export default class Llamada implements Instruccion{
 
             for (let i =0; i < parametrosfuncion.length; i++){
                 aux = parametrosfuncion[i] as Simbolos
-                id_aux = aux.identificador
+                id_aux = aux.identificador.toLowerCase()
                 tipo_aux = aux.tipo.type
 
 
                 exp_aux = parametrosllamada[i] as Expresion
-                tipo_valor = exp_aux.getTipo(controlador,ts)
                 valor_aux = exp_aux.getValor(controlador,ts)
+                tipo_valor = exp_aux.getTipo(controlador,ts)
+                
 
 
                 if((tipo_aux == tipo_valor ) || (tipo_aux == tipo.DOBLE && tipo_valor == tipo.ENTERO) ){
