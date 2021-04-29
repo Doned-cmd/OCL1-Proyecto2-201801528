@@ -27,13 +27,13 @@ export default class Asignacion implements Instruccion{
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         //verificamos si existe en la tabla de simbolos 
 
-        if(ts.existe(this.identificador)){
+        if(ts.existe(this.identificador.toLowerCase())){
             let valor = this.valor.getValor(controlador,ts );
             let tipo_valor = this.valor.getTipo(controlador,ts)
             //TODO: Validar si son del mismo tipo
            // if(valor instanceof Primitivo){
-                if((tipo_valor == ts.getSimbolo(this.identificador).tipo.type) || (ts.getSimbolo(this.identificador).tipo.type == tipo.ENTERO && tipo_valor == tipo.DOBLE) /**|| (tipo_valor == tipo.CARACTER && ts.getSimbolo(this.identificador).tipo.type == tipo.CADENA)**/){
-                    ts.getSimbolo(this.identificador).setValor(valor);
+                if((tipo_valor == ts.getSimbolo(this.identificador.toLowerCase()).tipo.type) || (ts.getSimbolo(this.identificador.toLowerCase()).tipo.type == tipo.ENTERO && tipo_valor == tipo.DOBLE) /**|| (tipo_valor == tipo.CARACTER && ts.getSimbolo(this.identificador).tipo.type == tipo.CADENA)**/){
+                    ts.getSimbolo(this.identificador.toLowerCase()).setValor(valor);
                 }else{
                     console.log("error al re-asignar, los tipos del valor y la variable no coinciden.")
                 }                                   

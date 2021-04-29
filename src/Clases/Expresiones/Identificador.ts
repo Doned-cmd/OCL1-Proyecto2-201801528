@@ -19,7 +19,7 @@ export default class Identificador implements Expresion{
     }
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
-        let existe_id = ts.getSimbolo(this.identificador);
+        let existe_id = ts.getSimbolo(this.identificador.toLowerCase());
 
         if(existe_id != null ){
             return existe_id.tipo.type; // ENTERO, DECIMAL, BOO
@@ -27,7 +27,7 @@ export default class Identificador implements Expresion{
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
-        let existe_id = ts.getSimbolo(this.identificador);
+        let existe_id = ts.getSimbolo(this.identificador.toLowerCase());
 
         if(existe_id != null){
             return existe_id.valor; 

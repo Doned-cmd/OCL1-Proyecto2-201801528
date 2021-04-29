@@ -88,6 +88,7 @@ caracter     (\'({escape2}|{aceptada2})\')
 "exec"               { console.log("EJECUTAR : "+ yytext); return 'EJECUTAR'}
 "break"               { console.log("BREAK : "+ yytext); return 'BREAK'}
 "return"               { console.log("RETURN : "+ yytext); return 'RETURN'}
+"continue"               { console.log("CONTINUE : "+ yytext); return 'CONTINUE'}
 
 /* SIMBOLOS ER */
 [0-9]+("."[0-9]+)\b        { console.log("DECIMAL : "+ yytext); return 'DECIMAL'}
@@ -152,6 +153,7 @@ caracter     (\'({escape2}|{aceptada2})\')
 
     const detener = require('../Clases/Instrucciones/SentenciaTransferencia/Break');
     const Retornar = require('../Clases/Instrucciones/SentenciaTransferencia/Return');
+    const Continue = require('../Clases/Instrucciones/SentenciaTransferencia/Continue');
     const errores = require('../Clases/Ast/Errores');
 
 %}
@@ -244,7 +246,6 @@ sent_if : IF PARA e PARC LLAVA instrucciones LLAVC                              
         ;
  
 sent_switch : SWITCH PARA e PARC LLAVA switch_case LLAVC { $$ = new Switch.default($3, $6, @1.first_line, @1.last_column); }
-             
             ; 
 
 
@@ -268,10 +269,10 @@ print : PRINT PARA e PARC PYC                       {$$ = new Print.default($3, 
         //| PRINT PARA devolverIncremento PARC PYC    {$$ = new Print.default($3, false,@1.first_line, @1.last_column); }
         ; 
 
-funciones : VOID ID PARA PARC LLAVA instrucciones LLAVC                 { $$ = new funcion.default(3, new tipo.default('VOID'), $2, [], true, $6, @1.first_line, @1.last_column ); }
-        | VOID ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { $$ = new funcion.default(3, new tipo.default('VOID'), $2, $4, true, $7, @1.first_line, @1.last_column ); }
-        | tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { $$ = new funcion.default(3, $1, $2, $4, true, $7, @1.first_line, @1.last_column ); }
-        | tipo ID PARA PARC LLAVA instrucciones LLAVC                   { $$ = new funcion.default(3, $1, $2, [], true, $6, @1.first_line, @1.last_column ); }
+funciones : VOID ID PARA PARC LLAVA instrucciones LLAVC                 { $$ = new funcion.default(3, new tipo.default('VOID'), $2, [], true, $6, @1.first_line, @1.last_column ); console.log("Metodo declarado");}
+        | VOID ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { $$ = new funcion.default(3, new tipo.default('VOID'), $2, $4, true, $7, @1.first_line, @1.last_column ); console.log("Funcion declarado");}
+        | tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { $$ = new funcion.default(2, $1, $2, $4, true, $7, @1.first_line, @1.last_column ); console.log("Funcion declarado");}
+        | tipo ID PARA PARC LLAVA instrucciones LLAVC                   { $$ = new funcion.default(2, $1, $2, [], true, $6, @1.first_line, @1.last_column ); console.log("Metodo declarado");}
         ;
 
 lista_parametros : lista_parametros COMA tipo ID    { $$ = $1; $$.push(new simbolo.default(6,$3, $4, null)); }

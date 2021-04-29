@@ -34,10 +34,10 @@ export default class Declaracion implements Instruccion{
             let variable = simbolo as Simbolos;
 
             //--> verifico que la variable no exista en la tabla de simbolos actual \
-            if(ts.existeEnActual(variable.identificador)){
-                let error = new Errores('Semantico', `La variable ${variable.identificador} ya existe en el entorno actual.`, this.linea, this.columna);
+            if(ts.existeEnActual(variable.identificador.toLowerCase())){
+                let error = new Errores('Semantico', `La variable ${variable.identificador.toLowerCase()} ya existe en el entorno actual.`, this.linea, this.columna);
                 controlador.errores.push(error);
-                controlador.append(`** Error Critico Semantico : La variable ${variable.identificador} ya existe en el entorno actual. En la linea ${this.linea} y columna ${this.columna}`);
+                controlador.append(`** Error Critico Semantico : La variable ${variable.identificador.toLowerCase()} ya existe en el entorno actual. En la linea ${this.linea} y columna ${this.columna}`);
                 continue;
             }
 
@@ -53,8 +53,8 @@ export default class Declaracion implements Instruccion{
                 if(tipo_valor == this.type.type /*|| (tipo_valor == tipo.DOBLE && this.type.type == tipo.ENTERO) || (tipo_valor == tipo.CARACTER && this.type.type == tipo.CADENA)*/){
                     //--> Lo agregamos a la tabla de simbolos 
                    
-                    let nuevo_simb = new Simbolos(variable.simbolo, this.type, variable.identificador, valor);
-                    ts.agregar(variable.identificador, nuevo_simb);
+                    let nuevo_simb = new Simbolos(variable.simbolo, this.type, variable.identificador.toLowerCase(), valor);
+                    ts.agregar(variable.identificador.toLowerCase(), nuevo_simb);
                     console.log("Variable asignada")
                 }else{
                     console.log("Variable no asignada, tipos diferentes")
@@ -63,8 +63,8 @@ export default class Declaracion implements Instruccion{
                 
             }else{
                 //--> Lo agregamos a la tabla de simbolos 
-                let nuevo_simb = new Simbolos(variable.simbolo, this.type, variable.identificador, null);
-                ts.agregar(variable.identificador, nuevo_simb);
+                let nuevo_simb = new Simbolos(variable.simbolo, this.type, variable.identificador.toLowerCase(), null);
+                ts.agregar(variable.identificador.toLowerCase(), nuevo_simb);
             }
 
         }

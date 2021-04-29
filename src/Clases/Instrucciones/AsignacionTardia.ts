@@ -27,7 +27,7 @@ export default class Asignacion implements Instruccion{
         //verificamos si existe en la tabla de simbolos 
 
         if(ts.existe(this.identificador)){
-            let ValorIniciar = ts.getSimbolo(this.identificador)
+            let ValorIniciar = ts.getSimbolo(this.identificador.toLowerCase())
             let valor = this.valor.getValor(controlador,ts );
             let tipo_valor = this.valor.getTipo(controlador,ts)
             //TODO: Validar si son del mismo tipo

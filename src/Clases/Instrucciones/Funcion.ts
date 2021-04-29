@@ -44,7 +44,9 @@ export default class Funcion extends Simbolos implements Instruccion{
                     console.log(r)
                     return r;
                 }
-            } 
+            }else if(r instanceof Detener || ins instanceof Detener) {
+                console.log("Error")
+            }
 
         }
         return null;

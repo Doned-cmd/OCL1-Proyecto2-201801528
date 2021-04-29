@@ -43,7 +43,8 @@ export default class Print implements Instruccion{
                 let valor_tipo = this.expresion.getTipo(controlador,ts);
                 //console.log(valor_tipo)
                 if ( valor_tipo === tipo.CADENA || valor_tipo === tipo.BOOLEANO ||  valor_tipo === tipo.ENTERO ||  valor_tipo === tipo.DOBLE ||  valor_tipo === tipo.CARACTER){   
-                    //console.log(valor)                                    
+                    console.log("imprimiendo: ")
+                    console.log(valor2)                                    
                     controlador.append(valor2); 
                 }else{
                 

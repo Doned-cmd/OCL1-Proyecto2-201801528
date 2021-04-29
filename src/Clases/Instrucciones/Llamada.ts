@@ -37,20 +37,19 @@ export default class Llamada implements Instruccion{
             
             if(this.VerificarParametros(this.parametros, simbolo_funcion.lista_params, controlador, ts, ts_local)){
                 
-                let  a = simbolo_funcion.ejecutar(controlador,ts)
-                console.log("esto esta imprimiendo")
-                console.log(a )
-                return a
+                let r = simbolo_funcion.ejecutar(controlador,ts_local);
+
+                if(r != null){
+                    console.log("la llamada devuelve")
+                    console.log(r)
+                    return r
+                }    
                 
+            }else{
+                console.log("los parametros estan mal")
             }
 
-            let r = simbolo_funcion.ejecutar(controlador,ts);
-
-            ///if(r != null){
-                console.log("la llamada devuelve")
-                console.log(r)
-                return r
-            //}            
+                    
         }else{
             //TODO: reportar error semantico
         }
@@ -58,8 +57,9 @@ export default class Llamada implements Instruccion{
     }
 
     VerificarParametros(parametrosllamada : Array<Expresion>, parametrosfuncion : Array<Simbolos>, controlador, ts:TablaSimbolos, ts_local:TablaSimbolos):boolean{
-
-        if(parametrosllamada.length == parametrosfuncion.length){
+        console.log(parametrosllamada.length )
+        let booleano : boolean = false;
+        if(parametrosllamada.length == parametrosfuncion.length ){
             let aux : Simbolos;
             let id_aux : string;
             let tipo_aux;
@@ -83,11 +83,16 @@ export default class Llamada implements Instruccion{
 
                     let simbolo = new Simbolos(aux.simbolo, aux.tipo, id_aux, valor_aux)
                     ts_local.agregar(id_aux,simbolo)
-                    return true
+                    booleano = true
+                }else{
+                    return false
                 }
             }
+        }if(parametrosllamada.length == 0 ){
+            booleano = true
         }
-        return false
+
+        return booleano
     }   
 
 

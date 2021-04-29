@@ -35,7 +35,7 @@ export default class While implements Instruccion{
                     let res = ins.ejecutar(controlador,ts_local);
                      //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
                      if(ins instanceof Detener || res instanceof Detener ){
-                         return res;
+                        return null;
                      }
 
                 }
