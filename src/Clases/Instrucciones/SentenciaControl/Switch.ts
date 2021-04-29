@@ -1,3 +1,4 @@
+import Errores from "src/Clases/Ast/Errores";
 import Nodo from "src/Clases/Ast/Nodo";
 import Controlador from "src/Clases/Controlador";
 import { Expresion } from "src/Clases/Interfaces/Expresion";
@@ -5,6 +6,7 @@ import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 import { tipo } from "src/Clases/TablaSimbolos/Tipo";
 import Detener from "../SentenciaTransferencia/Break";
+import Return from "../SentenciaTransferencia/Return";
 import Case_SW from "./Case_SW";
 import Default_SW from "./Default_SW";
 
@@ -45,7 +47,11 @@ export default class Switch implements Instruccion{
                     let ejecucion = insact.ejecutar(controlador,ts_local)
                     if(ejecucion instanceof Detener){
                         return ejecucion;
-                    }
+                    }else if (ejecucion instanceof Return || ejecucion instanceof Return){
+                        return ejecucion
+                    }//else if (ins instanceof Continuar || res instanceof Continuar){
+                    //    return null;
+                    //}  
                     EjecutarDefault = false
                 }
             }else if (insact instanceof Default_SW){                            
@@ -53,13 +59,19 @@ export default class Switch implements Instruccion{
                     let ejecucion = insact.ejecutar(controlador,ts_local)
                     if(ejecucion instanceof Detener){
                         return ejecucion;
-                    }
+                    }else if (ejecucion instanceof Return || ejecucion instanceof Return){
+                        return ejecucion
+                    }//else if (ins instanceof Continuar || res instanceof Continuar){
+                    //    return null;
+                    //}  
                     
                     
                 }
             }else{
-                    
-                console.log("error")
+                let error = new Errores('Semantico', `Error en el switch`, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`Error en el switch`+ "Linea: " +this.linea );
+                return null;
             }
             
             

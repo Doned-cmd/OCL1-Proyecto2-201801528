@@ -1,3 +1,4 @@
+import Errores from "../Ast/Errores";
 import Nodo from "../Ast/Nodo";
 import Controlador from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
@@ -46,7 +47,10 @@ export default class Llamada implements Instruccion{
                 }    
                 
             }else{
-                console.log("los parametros estan mal")
+                let error = new Errores('Semantico', `Los parametros de la funcion ${this.identificador} son erroneos. `, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`Los parametros de la funcion ${this.identificador} son erroneos. `+ "Linea: " +this.linea );
+                return null;
             }
 
                     

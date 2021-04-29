@@ -4,6 +4,7 @@ import Ejecutar from "../Instrucciones/Ejecutar";
 import Funcion from "../Instrucciones/Funcion";
 import { Instruccion } from "../Interfaces/Instruccion";
 import { TablaSimbolos } from "../TablaSimbolos/TablaSimbolos";
+import Errores from "./Errores";
 import Nodo from "./Nodo";
 
 export default class Ast implements Instruccion{
@@ -37,8 +38,10 @@ export default class Ast implements Instruccion{
             if(instruccion instanceof Ejecutar  && bandera == false){
                 instruccion.ejecutar(controlador, ts);
                 bandera = true;
-            }else if (bandera){
-                //reportar error
+            }else if (instruccion instanceof Ejecutar && bandera){
+                let error = new Errores('Semantico', ` No es posible realizar la ejecucion ya que existe un exec declarado ya. `, instruccion.linea, instruccion.column);
+                controlador.errores.push(error);
+                controlador.append(` No es posible realizar la ejecucion ya que existe un exec declarado ya. `+ "Linea: " +instruccion.linea );                
                 return;
             }
             if(instruccion instanceof Declaracion ){

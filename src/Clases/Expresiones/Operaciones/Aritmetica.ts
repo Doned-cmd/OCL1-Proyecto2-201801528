@@ -1,4 +1,5 @@
 //import { type } from "node:os";
+import Errores from "src/Clases/Ast/Errores";
 import Nodo from "src/Clases/Ast/Nodo";
 import Controlador from "src/Clases/Controlador";
 import { Expresion } from "src/Clases/Interfaces/Expresion";
@@ -72,7 +73,10 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         this.tipo = 4
                         return valor_exp1 + valor_exp2; //se convierte a cadena                        
                     }else{
-                        console.log("Error no se pueden sumar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`+ "Linea: " +this.linea );
+                        
                     }
                 }else if( this.exp1.getTipo(controlador,ts) == tipo.DOBLE){
                     if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -96,7 +100,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         this.tipo = 4
                         return valor_exp1 + valor_exp2; //se convierte a cadena                        
                     }else{
-                        console.log("Error no se pueden sumar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`+ "Linea: " +this.linea );
                     }
                 }else if(this.exp1.getTipo(controlador,ts) == tipo.BOOLEANO){
                     if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -114,10 +120,14 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         this.tipo = 1;
                         return num + valor_exp2;                    
                     }else if(this.exp2.getTipo(controlador,ts) == tipo.BOOLEANO){
-                        console.log("Error no se pueden sumar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`+ "Linea: " +this.linea );
                         //TODO: agregar error semantico.
                     }else if(this.exp2.getTipo(controlador,ts) == tipo.CARACTER){
-                        console.log("Error no se pueden sumar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`+ "Linea: " +this.linea );
                         //TODO: agregar error semantico.
                     }else if(this.exp2.getTipo(controlador,ts) == tipo.CADENA){                    
                         let variable:string = "true"
@@ -127,7 +137,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         this.tipo = 4
                         return variable + valor_exp2
                     }else{
-                        console.log("Error no se pueden sumar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`+ "Linea: " +this.linea );
                     }
                 }else if( this.exp1.getTipo(controlador,ts) == tipo.CARACTER){
                     //if(valor_exp1.length == 1){
@@ -146,7 +158,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         return valor_exp1 + valor_exp2;
                        
                     }else{
-                        console.log("Error no se pueden sumar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`+ "Linea: " +this.linea );
                     }
                                      
                 }else if( this.exp1.getTipo(controlador,ts) == tipo.CADENA){
@@ -156,7 +170,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 4
                             return valor_exp1 + valor_exp2;                            
                         }else{
-                            console.log("Error no se pueden sumar los valores")
+                            let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden sumar por ser incompatibles.`+ "Linea: " +this.linea );
                         }
                         //}   
                 }                
@@ -185,7 +201,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         this.tipo = 0;
                         return valor_exp1 - numascii;
                     }else{
-                        console.log("Error no se pueden restar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`+ "Linea: " +this.linea );
                     }
                 }else if( this.exp1.getTipo(controlador,ts) == tipo.DOBLE){
                     if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -206,7 +224,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         this.tipo = 1;
                         return valor_exp1 - numascii;
                     }else{
-                        console.log("Error no se pueden restar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`+ "Linea: " +this.linea );
                     }
                 }else if(this.exp1.getTipo(controlador,ts) == tipo.BOOLEANO){
                     if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -224,8 +244,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         this.tipo = 1
                         return num - valor_exp2;
                     }else{
-                        //TODO: agregar error semantico.
-                        console.log("Error no se pueden restar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`+ "Linea: " +this.linea );
                     }
                 }else if(this.exp1.getTipo(controlador,ts) == tipo.CARACTER){                    
                     if(this.exp1.getTipo(controlador,ts) == tipo.ENTERO){                        
@@ -237,13 +258,15 @@ export default class Aritmetica extends Operacion  implements Expresion {
                         this.tipo = 1
                         return numascii - valor_exp2;
                     }else{
-                        //TODO: agregar error semantico.
-                        console.log("Error no se pueden restar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`+ "Linea: " +this.linea );
                     }
                                        
                 }else{
-                    //TODO: agregar error semantico.
-                    console.log("Error no se pueden restar los valores")
+                    let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden restar por ser incompatibles.`+ "Linea: " +this.linea );
                 }                
                 break;
 /**
@@ -262,8 +285,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 0
                             return valor_exp1 * valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden multiplicar los valores")    
+                            let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`+ "Linea: " +this.linea ); 
                         }
                     }else if(this.exp1.getTipo(controlador,ts) == tipo.DOBLE){
                         if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -277,8 +301,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return valor_exp1 * valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden multiplicar los valores")    
+                            let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`+ "Linea: " +this.linea );   
                         }
                     }else if(this.exp1.getTipo(controlador,ts) == tipo.CARACTER){                    
                         if(this.exp1.getTipo(controlador,ts) == tipo.ENTERO){                        
@@ -290,12 +315,14 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return numascii * valor_exp2;
                         }else{
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden multiplicar los valores")
+                            let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`+ "Linea: " +this.linea ); 
                         }                                           
                     }else{
-                        //TODO: agregar error semantico.
-                        console.log("Error no se pueden multiplicar los valores")
+                        let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`+ "Linea: " +this.linea ); 
                     } 
                     break;
 
@@ -315,8 +342,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 0
                             return valor_exp1 * valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden multiplicar los valores")    
+                            let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`+ "Linea: " +this.linea );  
                         }
                     }else if(this.exp1.getTipo(controlador,ts) == tipo.DOBLE){
                         if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -330,8 +358,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return valor_exp1 * valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden multiplicar los valores")    
+                            let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`+ "Linea: " +this.linea );  
                         }
                     }else if(this.exp1.getTipo(controlador,ts) == tipo.CARACTER){                    
                         if(this.exp1.getTipo(controlador,ts) == tipo.ENTERO){                        
@@ -343,12 +372,14 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return numascii * valor_exp2;
                         }else{
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden multiplicar los valores")
+                            let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`+ "Linea: " +this.linea ); 
                         }                                           
                     }else{
-                        //TODO: agregar error semantico.
-                        console.log("Error no se pueden multiplicar los valores")
+                            let error = new Errores('Semantico', `Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`Los valores: ${valor_exp1} y ${valor_exp2}, no se pueden multiplicar por ser incompatibles.`+ "Linea: " +this.linea ); 
                     } 
                     break;
 
@@ -368,8 +399,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return valor_exp1 / valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden dividir los valores")    
+                            let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden dividir entre : ${valor_exp2}  por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`El valor: ${valor_exp1}, no se pueden dividir entre : ${valor_exp2}  por ser incompatibles.`+ "Linea: " +this.linea ); 
                         }
                     }else if(this.exp1.getTipo(controlador,ts) == tipo.DOBLE){
                         if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -383,8 +415,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return valor_exp1 / valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden dividir los valores")    
+                            let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden dividir entre : ${valor_exp2}  por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`El valor: ${valor_exp1}, no se pueden dividir entre : ${valor_exp2}  por ser incompatibles.`+ "Linea: " +this.linea );   
                         }
                     }else if(this.exp1.getTipo(controlador,ts) == tipo.CARACTER){                    
                         if(this.exp1.getTipo(controlador,ts) == tipo.ENTERO){                        
@@ -396,12 +429,14 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return numascii / valor_exp2;
                         }else{
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden dividir los valores")
+                            let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden dividir entre : ${valor_exp2}  por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`El valor: ${valor_exp1}, no se pueden dividir entre : ${valor_exp2}  por ser incompatibles.`+ "Linea: " +this.linea );
                         }                                           
                     }else{
-                        //TODO: agregar error semantico.
-                        console.log("Error no se pueden dividir los valores")
+                        let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden dividir entre : ${valor_exp2}  por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`El valor: ${valor_exp1}, no se pueden dividir entre : ${valor_exp2}  por ser incompatibles.`+ "Linea: " +this.linea );
                     } 
                     break;
 
@@ -417,8 +452,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return valor_exp1 ** valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden dividir los valores")    
+                            let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden elevar a : ${valor_exp2}  por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`El valor: ${valor_exp1}, no se pueden elevar a : ${valor_exp2}  por ser incompatibles.`+ "Linea: " +this.linea );  
                         }
                     }else if(this.exp1.getTipo(controlador,ts) == tipo.DOBLE){
                         if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -428,12 +464,14 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return valor_exp1 ** valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden dividir los valores")    
+                            let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden elevar a : ${valor_exp2}  por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`El valor: ${valor_exp1}, no se pueden elevar a : ${valor_exp2}  por ser incompatibles.`+ "Linea: " +this.linea );  
                         }
                     }else{
-                        //TODO: agregar error semantico.
-                        console.log("Error no se pueden dividir los valores")
+                        let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden elevar a : ${valor_exp2}  por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`El valor: ${valor_exp1}, no se pueden elevar a : ${valor_exp2}  por ser incompatibles.`+ "Linea: " +this.linea ); 
                     } 
                     break;
 
@@ -449,8 +487,9 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return valor_exp1 % valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden dividir los valores")    
+                            let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden dividir  entre : ${valor_exp2} para obtener el residuo por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`El valor: ${valor_exp1}, no se pueden dividir  entre : ${valor_exp2} para obtener el residuo por ser incompatibles.`+ "Linea: " +this.linea );   
                         }
                     }else if(this.exp1.getTipo(controlador,ts) == tipo.DOBLE){
                         if(this.exp2.getTipo(controlador,ts) == tipo.ENTERO){
@@ -460,12 +499,14 @@ export default class Aritmetica extends Operacion  implements Expresion {
                             this.tipo = 1
                             return valor_exp1 % valor_exp2;
                         }else {
-                            //TODO: agregar error semantico.
-                            console.log("Error no se pueden dividir los valores")    
+                            let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden dividir  entre : ${valor_exp2} para obtener el residuo por ser incompatibles.`, this.linea, this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`El valor: ${valor_exp1}, no se pueden dividir  entre : ${valor_exp2} para obtener el residuo por ser incompatibles.`+ "Linea: " +this.linea );  
                         }
                     }else{
-                        //TODO: agregar error semantico.
-                        console.log("Error no se pueden dividir los valores")
+                        let error = new Errores('Semantico', `El valor: ${valor_exp1}, no se pueden dividir  entre : ${valor_exp2} para obtener el residuo por ser incompatibles.`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`El valor: ${valor_exp1}, no se pueden dividir  entre : ${valor_exp2} para obtener el residuo por ser incompatibles.`+ "Linea: " +this.linea );
                     } 
                     break;
 
@@ -477,15 +518,18 @@ export default class Aritmetica extends Operacion  implements Expresion {
                     this.tipo = 1
                     return -valor_expU;
                 }else{
-                      //TODO: agregar error semantico.
-                      console.log("Error no se pueden negar el valor")
+                    let error = new Errores('Semantico', `El valor: ${valor_expU}, no se pueden negar, ya que no es ni entero ni doble`, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`El valor: ${valor_expU}, no se pueden negar, ya que no es ni entero ni doble`+ "Linea: " +this.linea );
                 }
                 break;
 
 
             //TODO: Agregar otros casos de aritmeticas (POTENCIA, MODULO)
             default:
-                //TODO: agregar errror que ser produjo algo inesperado.
+                let error = new Errores('Semantico', `Error severo al operar Aritmeticamente, simbolos no reconocidos`, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`Error severo al operar Aritmeticamente, simbolos no reconocidos`+ "Linea: " +this.linea );
                 break;
         }
 

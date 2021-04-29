@@ -37,7 +37,7 @@ export default class Declaracion implements Instruccion{
             if(ts.existeEnActual(variable.identificador.toLowerCase())){
                 let error = new Errores('Semantico', `La variable ${variable.identificador.toLowerCase()} ya existe en el entorno actual.`, this.linea, this.columna);
                 controlador.errores.push(error);
-                controlador.append(`** Error Critico Semantico : La variable ${variable.identificador.toLowerCase()} ya existe en el entorno actual. En la linea ${this.linea} y columna ${this.columna}`);
+                controlador.append(` Error Critico Semantico : La variable ${variable.identificador.toLowerCase()} ya existe en el entorno actual. En la linea ${this.linea} y columna ${this.columna}`);
                 continue;
             }
 
@@ -57,6 +57,10 @@ export default class Declaracion implements Instruccion{
                     ts.agregar(variable.identificador.toLowerCase(), nuevo_simb);
                     console.log("Variable asignada")
                 }else{
+                    let error = new Errores('Semantico', `La variable ${variable.identificador.toLowerCase()} y el valor a asignar no son iguales `, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`La variable ${variable.identificador.toLowerCase()} y el valor a asignar no son iguales `+ "Linea: " +this.linea );
+                    return null;
                     console.log("Variable no asignada, tipos diferentes")
                     //Error no se puede declarar por incopatibilidad de simbolos
                 }

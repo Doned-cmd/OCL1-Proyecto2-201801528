@@ -153,7 +153,7 @@ caracter     (\'({escape2}|{aceptada2})\')
 
     const detener = require('../Clases/Instrucciones/SentenciaTransferencia/Break');
     const Retornar = require('../Clases/Instrucciones/SentenciaTransferencia/Return');
-    const Continue = require('../Clases/Instrucciones/SentenciaTransferencia/Continue');
+    const Contiunar = require('../Clases/Instrucciones/SentenciaTransferencia/Continuar');
     const errores = require('../Clases/Ast/Errores');
 
 %}

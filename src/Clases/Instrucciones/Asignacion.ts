@@ -1,3 +1,4 @@
+import Errores from "../Ast/Errores";
 import Nodo from "../Ast/Nodo";
 import Controlador from "../Controlador";
 import Primitivo from "../Expresiones/Primitivo";
@@ -35,10 +36,17 @@ export default class Asignacion implements Instruccion{
                 if((tipo_valor == ts.getSimbolo(this.identificador.toLowerCase()).tipo.type) || (ts.getSimbolo(this.identificador.toLowerCase()).tipo.type == tipo.ENTERO && tipo_valor == tipo.DOBLE) /**|| (tipo_valor == tipo.CARACTER && ts.getSimbolo(this.identificador).tipo.type == tipo.CADENA)**/){
                     ts.getSimbolo(this.identificador.toLowerCase()).setValor(valor);
                 }else{
+                    let error = new Errores('Semantico', `error al re-asignar, los tipos del valor ${this.identificador} y la variable no coinciden.`, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`error al re-asignar, los tipos del valor ${this.identificador} y la variable no coinciden.`+ "Linea: " +this.linea );
+                    return null;
                     console.log("error al re-asignar, los tipos del valor y la variable no coinciden.")
                 }                                   
         }else{
-            //TODO: reportar error no existe variable.
+            let error = new Errores('Semantico', `Error No existe la variable ${this.identificador} en la tabla de simbolos.`, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`Error No existe la variable ${this.identificador} en la tabla de simbolos.`+ "Linea: " +this.linea );
+            return null;            
         }
         return null
     }

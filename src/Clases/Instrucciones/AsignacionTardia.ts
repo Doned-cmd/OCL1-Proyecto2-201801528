@@ -1,3 +1,4 @@
+import Errores from "../Ast/Errores";
 import Nodo from "../Ast/Nodo";
 import Controlador from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
@@ -39,14 +40,18 @@ export default class Asignacion implements Instruccion{
                 return devolver
                 
             }else{
-                console.log("error al sumar 1 con ++, el tipo de la variable no es correcto")
-
-
+                let error = new Errores('Semantico', `error al sumar 1 con ++, el tipo de la variable ${this.identificador} no es correcto`, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`error al sumar 1 con ++, el tipo de la variable ${this.identificador} no es correcto`+ "Linea: " +this.linea );
+                return null;
+                console.log("error al sumar 1 con ++, el tipo de la variable no es correcto")            
             }
             
         }else{
-            console.log("error al sumar 1 con ++, No existe el identificador")
-            //TODO: reportar error no existe variable.
+            let error = new Errores('Semantico', `Error No existe la variable ${this.identificador} en la tabla de simbolos.`, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`Error No existe la variable ${this.identificador} en la tabla de simbolos.`+ "Linea: " +this.linea );
+            return null;            
         }
         return null
     }

@@ -1,3 +1,4 @@
+import Errores from "../Ast/Errores";
 import Nodo from "../Ast/Nodo";
 import Controlador from "../Controlador";
 //import ValorDevuelto from "../Expresiones/ValorDevuelto";
@@ -48,7 +49,10 @@ export default class Print implements Instruccion{
                     controlador.append(valor2); 
                 }else{
                 
-
+                    let error = new Errores('Semantico', `Error al imprimir, los datos no son de tipo valido. `, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`Error al imprimir, los datos no son de tipo valido. `+ "Linea: " +this.linea );
+                    return null;
                     console.log("Error al imprimir datos")
                     //let realizada = this.instruccion.ejecutar(controlador,ts)
                     //controlador.append(realizada);                

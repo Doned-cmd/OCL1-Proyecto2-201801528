@@ -1,3 +1,4 @@
+import Errores from "../Ast/Errores";
 import Nodo from "../Ast/Nodo";
 import Controlador from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
@@ -28,7 +29,10 @@ export default class Ternario implements Expresion{
         if(typeof valor_condicion == 'boolean'){
             return valor_condicion ? this.verdadero.getTipo(controlador,ts) : this.falso.getTipo(controlador,ts); 
         }else{
-            //TODO: reportar error semantico si la condicion no es booleana.
+            let error = new Errores('Semantico', `Error al obtener el tipo en la operacion ternaria el valor de condicion no es buleano `, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`Error al obtener el tipo en la operacion ternaria el valor de condicion no es buleano `+ "Linea: " +this.linea );
+            return null;
         }
     }
 
@@ -38,7 +42,10 @@ export default class Ternario implements Expresion{
         if(typeof valor_condicion == 'boolean'){
             return valor_condicion ? this.verdadero.getValor(controlador,ts) : this.falso.getValor(controlador,ts); 
         }else{
-            //TODO: reportar error semantico si la condicion no es booleana.
+            let error = new Errores('Semantico', `Error al obtener el valor en la operacion ternaria el valor de condicion no es buleano `, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`Error al obtener el valor en la operacion ternaria el valor de condicion no es buleano `+ "Linea: " +this.linea );
+            return null;
         }
     }
 

@@ -1,3 +1,4 @@
+import Errores from "src/Clases/Ast/Errores";
 import Nodo from "src/Clases/Ast/Nodo";
 import Controlador from "src/Clases/Controlador";
 import { Expresion } from "src/Clases/Interfaces/Expresion";
@@ -59,7 +60,10 @@ export default class Logica extends Operacion implements Expresion{
                     if(typeof valor_expU == 'boolean'){
                         return !valor_expU;
                     }else{
-                        //TODO: Error
+                        let error = new Errores('Semantico', `No se puede negar ${valor_expU} ya que el valor no es booleano.`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede negar ${valor_expU} ya que el valor no es booleano.`+ "Linea: " +this.linea );
+            return null;
                     }
                     break;
             case Operador.OR:
@@ -80,6 +84,9 @@ export default class Logica extends Operacion implements Expresion{
                 break;
                             
             default:
+                let error = new Errores('Semantico', `Error critico, no se uso ningun operador logico reconocido`, this.linea, this.columna);
+                Controlador.errores.push(error);
+                Controlador.append(`Error critico, no se uso ningun operador logico reconocido`+ "Linea: " +this.linea );
                 break;
         }
     }

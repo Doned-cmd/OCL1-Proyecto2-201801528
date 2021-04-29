@@ -1,3 +1,4 @@
+import Errores from "../Ast/Errores";
 import Nodo from "../Ast/Nodo";
 import Controlador from "../Controlador";
 import { Instruccion } from "../Interfaces/Instruccion";
@@ -45,8 +46,13 @@ export default class Funcion extends Simbolos implements Instruccion{
                     return r;
                 }
             }else if(r instanceof Detener || ins instanceof Detener) {
-                console.log("Error")
-            }
+                let error = new Errores('Sintactico', `Error sintactico, el Break no esta dentro de un ciclo`, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`Error, el Break no esta dentro de un ciclo`+ "Linea: " +this.linea );
+                //return null;
+            }//else if (ins instanceof Continuar || res instanceof Continuar){
+            //    return null;
+            //}  
 
         }
         return null;

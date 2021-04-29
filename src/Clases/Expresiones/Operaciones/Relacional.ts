@@ -1,3 +1,4 @@
+import Errores from "src/Clases/Ast/Errores";
 import Nodo from "src/Clases/Ast/Nodo";
 import Controlador from "src/Clases/Controlador";
 import { Expresion } from "src/Clases/Interfaces/Expresion";
@@ -48,7 +49,11 @@ export default class Relacional extends Operacion implements Expresion{
                         let num_ascii = valor_exp2.charCodeAt(0);
                         return valor_exp1 < num_ascii;
                         
-                    }//TODO: agregar los otros casos de errores
+                    }else{
+                        let error = new Errores('Semantico', `No se puede operar Relacionalmente "<" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede operar Relacionalmente "<" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
+                    }
                 }else if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){
                     let num_ascii = valor_exp1.charCodeAt(0);
 
@@ -57,7 +62,15 @@ export default class Relacional extends Operacion implements Expresion{
                     }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
                         let num_ascii2 = valor_exp2.charCodeAt(0);
                         return num_ascii < num_ascii2;                        
-                    }//TODO: agregar los otros casos de errores
+                    }else{
+                        let error = new Errores('Semantico', `No se puede operar Relacionalmente "<" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede operar Relacionalmente "<" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
+                    }
+                }else{
+                    let error = new Errores('Semantico', `No se puede operar Relacionalmente "<" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                    Controlador.errores.push(error);
+                    Controlador.append(`No se puede operar Relacionalmente "<" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
                 }
                 
                 break;
@@ -69,7 +82,12 @@ export default class Relacional extends Operacion implements Expresion{
                         let num_ascii = valor_exp2.charCodeAt(0);
                         return valor_exp1 > num_ascii;
                         
-                    }//TODO: agregar los otros casos de errores
+                    }else{
+                        let error = new Errores('Semantico', `No se puede operar Relacionalmente ">" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede operar Relacionalmente ">" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
+                    }
+                    
                 }else if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){
                     let num_ascii = valor_exp1.charCodeAt(0);
 
@@ -78,18 +96,34 @@ export default class Relacional extends Operacion implements Expresion{
                     }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
                         let num_ascii2 = valor_exp2.charCodeAt(0);
                         return num_ascii > num_ascii2;                        
-                    }//TODO: agregar los otros casos de errores
+                    }else{
+                        let error = new Errores('Semantico', `No se puede operar Relacionalmente ">" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede operar Relacionalmente ">" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
+                    }
+                }else{
+                    let error = new Errores('Semantico', `No se puede operar Relacionalmente ">" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                    Controlador.errores.push(error);
+                    Controlador.append(`No se puede operar Relacionalmente ">" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
                 }
                     
                     break;
             case Operador.IGUALIGUAL:
                 if(this.exp1.getTipo(Controlador,TablaSimbolos) == this.exp2.getTipo(Controlador,TablaSimbolos)){
                     return valor_exp1 == valor_exp2;
+                }else{
+                    let error = new Errores('Semantico', `No se puede operar Relacionalmente "==" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                    Controlador.errores.push(error);
+                    Controlador.append(`No se puede operar Relacionalmente "==" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
                 }
                 break;
             case Operador.NOTIGUAL:
                 if(this.exp1.getTipo(Controlador,TablaSimbolos) == this.exp2.getTipo(Controlador,TablaSimbolos)){                    
                     return valor_exp1 != valor_exp2;                    
+                }else{
+                    let error = new Errores('Semantico', `No se puede operar Relacionalmente "!=" ${valor_exp2} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                    Controlador.errores.push(error);
+                    Controlador.append(`No se puede operar Relacionalmente "!=" ${valor_exp2} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
                 }
                 break;
             case Operador.MAYORIGUAL:
@@ -100,7 +134,11 @@ export default class Relacional extends Operacion implements Expresion{
                         let num_ascii = valor_exp2.charCodeAt(0);
                         return valor_exp1 >= num_ascii;
                         
-                    }//TODO: agregar los otros casos de errores
+                    }else{
+                        let error = new Errores('Semantico', `No se puede operar Relacionalmente ">=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede operar Relacionalmente ">=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
+                    }
                 }else if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){
                     let num_ascii = valor_exp1.charCodeAt(0);
 
@@ -109,7 +147,15 @@ export default class Relacional extends Operacion implements Expresion{
                     }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
                         let num_ascii2 = valor_exp2.charCodeAt(0);
                         return num_ascii >= num_ascii2;                        
-                    }//TODO: agregar los otros casos de errores
+                    }else{
+                        let error = new Errores('Semantico', `No se puede operar Relacionalmente ">=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede operar Relacionalmente ">=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
+                    }
+                }else{
+                    let error = new Errores('Semantico', `No se puede operar Relacionalmente ">=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                    Controlador.errores.push(error);
+                    Controlador.append(`No se puede operar Relacionalmente ">=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
                 }
                     break;
 
@@ -121,7 +167,11 @@ export default class Relacional extends Operacion implements Expresion{
                         let num_ascii = valor_exp2.charCodeAt(0);
                         return valor_exp1 <= num_ascii;
                         
-                    }//TODO: agregar los otros casos de errores
+                    }else{
+                        let error = new Errores('Semantico', `No se puede operar Relacionalmente "<=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede operar Relacionalmente "<=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
+                    }
                 }else if(this.exp1.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){
                     let num_ascii = valor_exp1.charCodeAt(0);
 
@@ -130,7 +180,15 @@ export default class Relacional extends Operacion implements Expresion{
                     }else if(this.exp2.getTipo(Controlador,TablaSimbolos) == tipo.CARACTER){                        
                         let num_ascii2 = valor_exp2.charCodeAt(0);
                         return num_ascii <= num_ascii2;                        
-                    }//TODO: agregar los otros casos de errores
+                    }else{
+                        let error = new Errores('Semantico', `No se puede operar Relacionalmente "<=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                        Controlador.errores.push(error);
+                        Controlador.append(`No se puede operar Relacionalmente "<=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
+                    }
+                }else{
+                    let error = new Errores('Semantico', `No se puede operar Relacionalmente "<=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`, this.linea, this.columna);
+                    Controlador.errores.push(error);
+                    Controlador.append(`No se puede operar Relacionalmente "<=" ${valor_exp1} y ${valor_exp2}, ya que no son de tipos validos`+ "Linea: " +this.linea );                        
                 }
                 
                 break;                  

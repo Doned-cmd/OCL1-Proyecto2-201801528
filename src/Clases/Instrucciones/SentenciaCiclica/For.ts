@@ -1,11 +1,14 @@
 //import { Console } from "node:console";
 //import { Console } from "node:console"
+import Errores from "src/Clases/Ast/Errores";
 import Nodo from "src/Clases/Ast/Nodo";
 import Controlador from "src/Clases/Controlador";
 import { Expresion } from "src/Clases/Interfaces/Expresion";
 import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 import Detener from "../SentenciaTransferencia/Break";
+import Continuar from "../SentenciaTransferencia/Continuar";
+import Return from "../SentenciaTransferencia/Return";
 
 
 export default class Asignacion implements Instruccion{
@@ -40,6 +43,9 @@ export default class Asignacion implements Instruccion{
             //let valor_condicion = this.condicion.getValor(controlador,ts)
             if (typeof this.condicion.getValor(controlador,ts_local) === 'boolean') {    
                 
+                // poner la iteracion aqui si es que esta mal el codigo, copiarla
+
+
                 while(this.condicion.getValor(controlador,ts_local)){
                     let ts_local_ciclo = new TablaSimbolos(ts_local);
                     
@@ -52,18 +58,36 @@ export default class Asignacion implements Instruccion{
 
                         //this.ejecutar(controlador,ts)
                         if(ins instanceof Detener || res instanceof Detener ){
-                            return res;
-                        }                   
+                            return null;
+                        }else if (ins instanceof Return || res instanceof Return){
+                            return res
+                        }//else if (ins instanceof Continuar || res instanceof Continuar){
+                        //    return null;
+                        //}                 
                     }
                     if( this.iteracion.getTipo(controlador,ts_local) == "AsignacionTardia"){
                         this.iteracion.ejecutar(controlador,ts_local)
                     }
+
+                    if( !(this.iteracion.getTipo(controlador,ts_local) == "AsignacionTardia" )&&!(this.iteracion.getTipo(controlador,ts_local) == "Asignacion" )){
+                        let error = new Errores('Semantico', `Error en la iteracion del for. `, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Error en la iteracion del for. `+ "Linea: " +this.linea );
+                        return null;
+                    }
                 }
+            }else{
+                let error = new Errores('Semantico', `Error en la conidicon del for`, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`Error en la condicion del for`+ "Linea: " +this.linea );
+                return null;
             }
         }else{        
             this.declaracion.ejecutar(controlador, ts)
             //let valor_condicion = this.condicion.getValor(controlador,ts)
             if (typeof this.condicion.getValor(controlador,ts) === 'boolean') {    
+                
+                // copiar la iteracion de asignacion aqui 
                 
                 while(this.condicion.getValor(controlador,ts)){
                     let ts_local_ciclo = new TablaSimbolos(ts);
@@ -77,13 +101,28 @@ export default class Asignacion implements Instruccion{
 
                         //this.ejecutar(controlador,ts)
                         if(ins instanceof Detener || res instanceof Detener ){
-                            return res;
-                        }                   
+                            return null;
+                        }else if (ins instanceof Return || res instanceof Return){
+                            return res
+                        }//else if (ins instanceof Continuar || res instanceof Continuar){
+                         //   return null;
+                        //}
                     }
                     if( this.iteracion.getTipo(controlador,ts) == "AsignacionTardia"){
                         this.iteracion.ejecutar(controlador,ts)
                     }
+                    if( !(this.iteracion.getTipo(controlador,ts) == "AsignacionTardia") && !(this.iteracion.getTipo(controlador,ts) == "Asignacion" )){
+                        let error = new Errores('Semantico', `Error en la iteracion del for. `, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`Error en la iteracion del for. `+ "Linea: " +this.linea );
+                        return null;
+                    }
                 }
+            }else{
+                let error = new Errores('Semantico', `Error en la conidicon del for. `, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`Error en la condicion del for. `+ "Linea: " +this.linea );
+                return null;
             }
         }
         return null
