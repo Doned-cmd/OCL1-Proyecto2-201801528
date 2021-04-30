@@ -7,7 +7,7 @@ import { Expresion } from "src/Clases/Interfaces/Expresion";
 import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 import Detener from "../SentenciaTransferencia/Break";
-import Continuar from "../SentenciaTransferencia/Continuar";
+import Continuar from "../SentenciaTransferencia/Continue";
 import Return from "../SentenciaTransferencia/Return";
 
 
@@ -45,14 +45,11 @@ export default class Asignacion implements Instruccion{
                 
                 // poner la iteracion aqui si es que esta mal el codigo, copiarla
 
-
+                seguir:
                 while(this.condicion.getValor(controlador,ts_local)){
                     let ts_local_ciclo = new TablaSimbolos(ts_local);
                     
-                    if( this.iteracion.getTipo(controlador,ts_local) == "Asignacion"){
-                        //console.log(this.declaracion.getTipo(controlador,ts_local))
-                        this.iteracion.ejecutar(controlador,ts_local)
-                    }
+                    
                     for(let ins of this.lista_instrucciones){
                         let res = ins.ejecutar(controlador,ts_local_ciclo);
 
@@ -61,10 +58,25 @@ export default class Asignacion implements Instruccion{
                             return null;
                         }else if (ins instanceof Return || res instanceof Return){
                             return res
-                        }//else if (ins instanceof Continuar || res instanceof Continuar){
-                        //    return null;
-                        //}                 
+                        }else if (ins instanceof Continuar || res instanceof Continuar){
+                            
+                            if( this.iteracion.getTipo(controlador,ts_local) == "Asignacion"){
+                                //console.log(this.declaracion.getTipo(controlador,ts_local))
+                                this.iteracion.ejecutar(controlador,ts_local)
+                            }
+        
+                            if( this.iteracion.getTipo(controlador,ts_local) == "AsignacionTardia"){
+                                this.iteracion.ejecutar(controlador,ts_local)
+                            }
+                            continue seguir;
+                        }                 
                     }
+
+                    if( this.iteracion.getTipo(controlador,ts_local) == "Asignacion"){
+                        //console.log(this.declaracion.getTipo(controlador,ts_local))
+                        this.iteracion.ejecutar(controlador,ts_local)
+                    }
+
                     if( this.iteracion.getTipo(controlador,ts_local) == "AsignacionTardia"){
                         this.iteracion.ejecutar(controlador,ts_local)
                     }
@@ -75,6 +87,8 @@ export default class Asignacion implements Instruccion{
                         controlador.append(`Error en la iteracion del for. `+ "Linea: " +this.linea );
                         return null;
                     }
+
+                    continue seguir;
                 }
             }else{
                 let error = new Errores('Semantico', `Error en la conidicon del for`, this.linea, this.columna);
@@ -88,14 +102,11 @@ export default class Asignacion implements Instruccion{
             if (typeof this.condicion.getValor(controlador,ts) === 'boolean') {    
                 
                 // copiar la iteracion de asignacion aqui 
-                
+                seguir2:
                 while(this.condicion.getValor(controlador,ts)){
                     let ts_local_ciclo = new TablaSimbolos(ts);
                     
-                    if( this.iteracion.getTipo(controlador,ts) == "Asignacion"){
-                        //console.log(this.declaracion.getTipo(controlador,ts_local))
-                        this.iteracion.ejecutar(controlador,ts)
-                    }
+                    
                     for(let ins of this.lista_instrucciones){
                         let res = ins.ejecutar(controlador,ts_local_ciclo);
 
@@ -104,11 +115,22 @@ export default class Asignacion implements Instruccion{
                             return null;
                         }else if (ins instanceof Return || res instanceof Return){
                             return res
-                        }//else if (ins instanceof Continuar || res instanceof Continuar){
-                         //   return null;
-                        //}
+                        }else if (ins instanceof Continuar || res instanceof Continuar){
+                            if( this.iteracion.getTipo(controlador,ts) == "AsignacionTardia"){
+                                this.iteracion.ejecutar(controlador,ts)
+                            }
+                            if( this.iteracion.getTipo(controlador,ts) == "Asignacion"){
+                                //console.log(this.declaracion.getTipo(controlador,ts_local))
+                                this.iteracion.ejecutar(controlador,ts)
+                            }
+                            continue seguir2;
+                        }
                     }
                     if( this.iteracion.getTipo(controlador,ts) == "AsignacionTardia"){
+                        this.iteracion.ejecutar(controlador,ts)
+                    }
+                    if( this.iteracion.getTipo(controlador,ts) == "Asignacion"){
+                        //console.log(this.declaracion.getTipo(controlador,ts_local))
                         this.iteracion.ejecutar(controlador,ts)
                     }
                     if( !(this.iteracion.getTipo(controlador,ts) == "AsignacionTardia") && !(this.iteracion.getTipo(controlador,ts) == "Asignacion" )){
@@ -117,6 +139,7 @@ export default class Asignacion implements Instruccion{
                         controlador.append(`Error en la iteracion del for. `+ "Linea: " +this.linea );
                         return null;
                     }
+                    continue seguir2;
                 }
             }else{
                 let error = new Errores('Semantico', `Error en la conidicon del for. `, this.linea, this.columna);

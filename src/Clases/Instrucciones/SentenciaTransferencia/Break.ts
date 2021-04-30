@@ -8,7 +8,7 @@ export default class Detener implements Instruccion{
 
     constructor() { }
     getTipo(controlador: Controlador, ts: TablaSimbolos): string {
-        throw new Error("Method not implemented.");
+        return "Break"
     }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {

@@ -6,7 +6,9 @@ import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 import { tipo } from "src/Clases/TablaSimbolos/Tipo";
 import Detener from "../SentenciaTransferencia/Break";
-import Return from "../SentenciaTransferencia/Return";
+import Continuar from "../SentenciaTransferencia/Continue";
+import Retornar from "../SentenciaTransferencia/Return";
+
 import Case_SW from "./Case_SW";
 import Default_SW from "./Default_SW";
 
@@ -45,25 +47,25 @@ export default class Switch implements Instruccion{
                 if (insact.getTipo(controlador,ts_local) === valor_condicionPrincipal ){
                     console.log(valor_condicionPrincipal, insact.getTipo(controlador,ts_local));
                     let ejecucion = insact.ejecutar(controlador,ts_local)
-                    if(ejecucion instanceof Detener){
+                    if(ejecucion instanceof Detener || insact instanceof Detener){
                         return ejecucion;
-                    }else if (ejecucion instanceof Return || ejecucion instanceof Return){
+                    }else if (ejecucion instanceof Retornar || insact instanceof Retornar){
                         return ejecucion
-                    }//else if (ins instanceof Continuar || res instanceof Continuar){
-                    //    return null;
-                    //}  
+                    }else if (ejecucion instanceof Continuar || insact instanceof Continuar){
+                        return ejecucion;
+                    }  
                     EjecutarDefault = false
                 }
             }else if (insact instanceof Default_SW){                            
                 if (EjecutarDefault){
                     let ejecucion = insact.ejecutar(controlador,ts_local)
-                    if(ejecucion instanceof Detener){
+                    if(ejecucion instanceof Detener || insact instanceof Detener){
                         return ejecucion;
-                    }else if (ejecucion instanceof Return || ejecucion instanceof Return){
+                    }else if (ejecucion instanceof Retornar || insact instanceof Retornar){
                         return ejecucion
-                    }//else if (ins instanceof Continuar || res instanceof Continuar){
-                    //    return null;
-                    //}  
+                    }else if (ejecucion instanceof Continuar || insact instanceof Continuar){
+                        return ejecucion;
+                    }  
                     
                     
                 }

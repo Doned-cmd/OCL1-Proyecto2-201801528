@@ -153,7 +153,7 @@ caracter     (\'({escape2}|{aceptada2})\')
 
     const detener = require('../Clases/Instrucciones/SentenciaTransferencia/Break');
     const Retornar = require('../Clases/Instrucciones/SentenciaTransferencia/Return');
-    const Contiunar = require('../Clases/Instrucciones/SentenciaTransferencia/Continuar');
+    const Contiunar = require('../Clases/Instrucciones/SentenciaTransferencia/Continue');
     const errores = require('../Clases/Ast/Errores');
 
 %}
@@ -198,6 +198,8 @@ instruccion : declaracion   { $$ = $1; }
             | EJECUTAR llamada PYC { $$ = new ejecutar.default($2, @1.first_line, @1.last_column); }
             | BREAK PYC     { $$ = new detener.default(); }
             | RETURN e PYC     { $$ = new Retornar.default($2); }
+            | RETURN  PYC     { $$ = new Retornar.default( new primitivo.default("null", 5,$1.first_line, $1.last_column) ); }
+            | CONTINUE  PYC     { $$ = new Contiunar.default(); console.log("continue declarado");}
             | error         { console.log("Error Sintactico" + yytext 
                                     + "linea: " + this._$.first_line 
                                     + "columna: " + this._$.first_column); 

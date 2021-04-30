@@ -8,7 +8,7 @@ export default class Continuar implements Instruccion{
 
     constructor() { }
     getTipo(controlador: Controlador, ts: TablaSimbolos): string {
-        throw new Error("Method not implemented.");
+        return "Continue";
     }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {

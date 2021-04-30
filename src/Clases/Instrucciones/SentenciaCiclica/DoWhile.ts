@@ -6,8 +6,10 @@ import { Expresion } from "src/Clases/Interfaces/Expresion";
 import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 import Detener from "../SentenciaTransferencia/Break";
-import Continuar from "../SentenciaTransferencia/Continuar";
-import Return from "../SentenciaTransferencia/Return";
+import Continuar from "../SentenciaTransferencia/Continue";
+import Retornar from "../SentenciaTransferencia/Return";
+
+
 
 export default class While implements Instruccion{
 
@@ -41,15 +43,15 @@ export default class While implements Instruccion{
                 //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
                 if(ins instanceof Detener || res instanceof Detener ){
                     return null;
-                }else if (ins instanceof Return || res instanceof Return){
+                }else if (ins instanceof Retornar || res instanceof Retornar){
                     return res
-                }//else if (ins instanceof Continuar || res instanceof Continuar){
-                //    return null;
-                //}
+                }else if (ins instanceof Continuar || res instanceof Continuar){
+                    break
+                }
     
             }
 
-
+            aqui:
             while(this.condicion.getValor(controlador,ts)){
 
                 let ts_local = new TablaSimbolos(ts);
@@ -59,13 +61,14 @@ export default class While implements Instruccion{
                      //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
                      if(ins instanceof Detener || res instanceof Detener ){
                         return null;
-                    }else if (ins instanceof Return || res instanceof Return){
+                    }else if (ins instanceof Retornar || res instanceof Retornar){
                         return res
-                    }//else if (ins instanceof Continuar || res instanceof Continuar){
-                    //    return null;
-                    //}
+                    }else if (ins instanceof Continuar || res instanceof Continuar){
+                        continue aqui;
+                    }
 
                 }
+                continue aqui;
             }
         }else{
             let error = new Errores('Semantico', `Error en la conidicon del Do While`, this.linea, this.columna);

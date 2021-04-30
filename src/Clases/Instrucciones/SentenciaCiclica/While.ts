@@ -5,8 +5,9 @@ import { Expresion } from "src/Clases/Interfaces/Expresion";
 import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 import Detener from "../SentenciaTransferencia/Break";
-import Continuar from "../SentenciaTransferencia/Continuar";
-import Return from "../SentenciaTransferencia/Return";
+import Continuar from "../SentenciaTransferencia/Continue";
+import Retornar from "../SentenciaTransferencia/Return";
+
 
 export default class While implements Instruccion{
 
@@ -28,25 +29,33 @@ export default class While implements Instruccion{
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let valor_condicion = this.condicion.getValor(controlador, ts);
 
-        if(typeof valor_condicion == 'boolean'){
-
+        if(typeof valor_condicion == 'boolean'){      
+            siguiente:  
             while(this.condicion.getValor(controlador,ts)){
-
+                
                 let ts_local = new TablaSimbolos(ts);
 
                 for(let ins of this.lista_instrucciones){
                     let res = ins.ejecutar(controlador,ts_local);
                      //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
+                     //console.log(ins.getTipo(controlador,ts_local));
+
                      if(ins instanceof Detener || res instanceof Detener ){
-                        return res;
-                    }else if (ins instanceof Return || res instanceof Return){
+                        console.log("un break en el while " + "linea: " + this.linea)
+                        return null;
+                    }
+                     if (ins instanceof Retornar || res instanceof Retornar){
+                        console.log("un return en el while " + "linea: " + this.linea)
+                        console.log(res)
                         return res
-                    }//else if (ins instanceof Continuar || res instanceof Continuar){
-                    //    return null;
-                     
-                    //}
+                    }
+                     if (ins instanceof Continuar || res instanceof Continuar){
+                        //console.log("un continue en el while " + "linea: " + this.linea)
+                        continue siguiente;  
+                    }
 
                 }
+                continue siguiente;                
             }
         }else{
             let error = new Errores('Semantico', `Error en la conidicon del while. `, this.linea, this.columna);
@@ -54,7 +63,7 @@ export default class While implements Instruccion{
             controlador.append(`Error en la condicion del while. `+ "Linea: " +this.linea );
             return null;
         }
-        return null
+        //return null
     }
     
     recorrer(): Nodo {

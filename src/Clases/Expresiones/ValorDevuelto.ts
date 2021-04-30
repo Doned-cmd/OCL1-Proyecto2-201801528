@@ -1,6 +1,7 @@
 import Nodo from "../Ast/Nodo";
 import Controlador from "../Controlador";
 import Llamada from "../Instrucciones/Llamada";
+import Retornar from "../Instrucciones/SentenciaTransferencia/Return";
 import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
 import { TablaSimbolos } from "../TablaSimbolos/TablaSimbolos";
@@ -56,7 +57,12 @@ export default class  ValorDevuelto implements Expresion{
         this.primitivo = this.instrucionAcc.ejecutar(controlador,ts)
         console.log("el parseador ++ esta devolviendo")
         console.log(this.primitivo)
-        return this.primitivo;
+        if(this.primitivo instanceof Retornar){
+            return this.primitivo.valor.getValor(controlador,ts);
+        }else{
+            return this.primitivo;
+        }
+        
     }
     recorrer(): Nodo {
        let padre = new Nodo("Primitivo","");

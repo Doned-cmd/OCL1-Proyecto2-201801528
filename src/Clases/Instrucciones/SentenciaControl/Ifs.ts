@@ -6,7 +6,9 @@ import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 import { tipo } from "src/Clases/TablaSimbolos/Tipo";
 import Detener from "../SentenciaTransferencia/Break";
-import Return from "../SentenciaTransferencia/Return";
+import Continuar from "../SentenciaTransferencia/Continue";
+import Retornar from "../SentenciaTransferencia/Return";
+
 
 
 export default class Ifs implements Instruccion{
@@ -40,11 +42,11 @@ export default class Ifs implements Instruccion{
                     //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
                     if(ins instanceof Detener || res instanceof Detener  ){
                         return res;
-                    }else if (ins instanceof Return || res instanceof Return){
+                    }else if (ins instanceof Retornar || res instanceof Retornar){
                         return res
-                    }//else if (ins instanceof Continuar || res instanceof Continuar){
-                    //    return null;
-                    //}  
+                    }else if (ins instanceof Continuar || res instanceof Continuar){
+                       return res;
+                    }  
                 }
             }else{
                 for(let ins of this.lista_elses){
@@ -52,11 +54,11 @@ export default class Ifs implements Instruccion{
                     //TODO verificar si res es de tipo CONTINUE, RETORNO 
                     if(ins instanceof Detener || res instanceof Detener  ){
                         return res;
-                    }else if (ins instanceof Return || res instanceof Return){
+                    }else if (ins instanceof Retornar || res instanceof Retornar){
                         return res
-                    }//else if (ins instanceof Continuar || res instanceof Continuar){
-                    //    return null;
-                    //}  
+                    }else if (ins instanceof Continuar || res instanceof Continuar){
+                        return res;
+                    }  
                 }
             }
         }else{
