@@ -1,6 +1,8 @@
+
+
 <mdb-navbar SideClass="navbar navbar-expand-lg elegant-color">
   <mdb-navbar-brand>
-      <a class="navbar-brand" href="#">OLC1-C-Interprete <i class="fas fa-cogs"></i></a>
+      <a class="navbar-brand" href="#">OLC1-Proyecto2-201801528 <i class="fas fa-cogs"></i></a>
   </mdb-navbar-brand>
   <links>
      
@@ -9,23 +11,31 @@
             <button mdbBtn (click)="ejecutar()" color="success" outline="true" class="waves-light" mdbWavesEffect type="button"><i class="fas fa-play"></i>Ejecutar</button>
             
         </form>
-        
+        <form class="form-inline">
+          <button mdbBtn (click)="GenerarReporteTabla('TablaSim')"   color="success" outline="true" class="waves-light" mdbWavesEffect type="button" >Tabla de Simbolos</button>
+        </form>
+
+        <form class="form-inline">
+          <button mdbBtn (click)="recorrer()"   color="success" outline="true" class="waves-light" mdbWavesEffect type="button" >Reporte</button>
+        </form>
     </form>
   </links>
 </mdb-navbar>
+
+
 <!-- Start your project here-->
-<div class="container-fluid " style="background-color: #212121;">
+<!--<div class="container-fluid " style="background-color: #212121;">-->
   <br>
   
   <!-- AREA DE TEXTO -->
-  <div class="row" >
-    <div class="col-6"> <h3 style="color: beige;"><i class="fas fa-file-code"></i> Entrada</h3> </div>
-    
-  </div>
+
+<div class="row">
+
 
   <!-- AREA DE EDITORES DE TEXTO -->
-  <div class="col">
-    
+   
+  <div class="col-sm-6">
+    <h3 style="color: aqua;"><i class="fas fa-file-code"></i> Entrada</h3> 
     <ngx-codemirror
       [(ngModel)]="entrada"
       [options]="{
@@ -36,11 +46,10 @@
     ></ngx-codemirror>
   </div>
 
-  <br>
-  <br>
 
-  <div class="col"> <h3 style="color: beige;"><i class="fas fa-terminal"></i> Consola</h3>  </div>
-  <div class="col">
+
+  <div class="col-sm-6">
+    <h3 style="color: aqua;"><i class="fas fa-terminal"></i> Consola</h3>
     <ngx-codemirror
       [(ngModel)]="consola"
       [options]="{
@@ -51,25 +60,27 @@
     ></ngx-codemirror>
   </div>
   
-  <br>
+</div>
 
+
+<!--
   <button class="tablink" (click)="openPage('TablaSim')">Tabla de Simbolos</button>
-  
+-->  
     
-    <div id="TablaSim" class="tabcontent" style="background-color: #616161;">
+    <div id="TablaSim" *ngIf="MostrarTablaSimbolos" class="tabcontent" style="background-color: #212121;">
       <table mdbTable id= "tablasimbols" style="width:100%" bordered="true">
       
       </table>
     </div>
 
 
-  <br>
-</div>
+ 
+<!--</div>-->
 
 
 
 <script type="text/javascript"></script>
 
 
-<!-- /Start your project here-->
+
     

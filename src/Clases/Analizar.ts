@@ -3,13 +3,14 @@ import * as sintactico from '../Analizadores/gramatica'
 import * as sintactico_interprete from '../Analizadores/A_interprete'
 import Controlador from './Controlador';
 import { TablaSimbolos } from './TablaSimbolos/TablaSimbolos';
+import Nodo from './Ast/Nodo';
 
 /**
  * @class Esta clase manda a analizar la entrada 
  */
 export class Analizador{
 
-    public recorrer(input){
+    public recorrer(input):Nodo{
 
         try {
             let ast = sintactico_interprete.parse(input);
@@ -18,7 +19,7 @@ export class Analizador{
             return nodo_ast;
             
         } catch (error) {
-            
+            console.log("Error al devolver la raiz del arbol")
         }
     }
 

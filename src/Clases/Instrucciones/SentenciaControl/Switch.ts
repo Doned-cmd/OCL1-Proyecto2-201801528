@@ -84,7 +84,21 @@ export default class Switch implements Instruccion{
     }
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let Padre = new Nodo("Switch","")
+        Padre.AddHijo(new Nodo("Switch",""))
+        Padre.AddHijo(new Nodo("(",""))
+        let hijoCondicion = new Nodo("expresion","")
+        hijoCondicion.AddHijo(this.condicionPrincipal.recorrer())    
+        Padre.AddHijo(hijoCondicion)
+        Padre.AddHijo(new Nodo(")",""))
+        Padre.AddHijo(new Nodo("{",""))
+        let HijoCasos = new Nodo("casos","")
+        for ( let cases of this.lista_casos){
+            HijoCasos.AddHijo(cases.recorrer())
+        }
+        Padre.AddHijo(HijoCasos)
+        Padre.AddHijo(new Nodo("}",""))
+        return Padre
     }
 
 

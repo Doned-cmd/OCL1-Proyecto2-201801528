@@ -76,7 +76,14 @@ export default class Declaracion implements Instruccion{
     }
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("Declaracion","")
+
+        for(let simbolo of this.lista_simbolos){
+            let variable = simbolo as Simbolos;
+            
+        }
+
+        return padre
     }
 
 }

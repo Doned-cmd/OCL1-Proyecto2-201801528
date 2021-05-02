@@ -67,7 +67,21 @@ export default class While implements Instruccion{
     }
     
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("While","");
+        padre.AddHijo(new Nodo("while",""))
+        padre.AddHijo(new Nodo("(",""))
+        let hijoCondicion = new Nodo("Condicion","")
+        hijoCondicion.AddHijo(this.condicion.recorrer())
+        padre.AddHijo(hijoCondicion)
+        padre.AddHijo(new Nodo(")",""))
+        padre.AddHijo(new Nodo("{",""))
+        let HijoInstruccion = new Nodo("instrucciones","")
+        for(let ins of this.lista_instrucciones){
+            HijoInstruccion.AddHijo(ins.recorrer())
+        }        
+        padre.AddHijo(HijoInstruccion)
+        padre.AddHijo(new Nodo("}",""))
+        return padre
     }
 
 }

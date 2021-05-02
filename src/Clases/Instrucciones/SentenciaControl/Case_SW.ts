@@ -38,7 +38,27 @@ export default class Case_SW implements Instruccion{
         return null;
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("Case","");
+        padre.AddHijo(new Nodo("case",""))
+
+        let hijoCondicion = new Nodo("expresion","")
+        hijoCondicion.AddHijo(this.condicion.recorrer())
+        padre.AddHijo(hijoCondicion)
+
+        padre.AddHijo(new Nodo( ":",""))
+
+        
+        
+        let HijoInstruccion = new Nodo("Instrucciones","")
+        for(let ins of this.lista_instrucciones){
+            HijoInstruccion.AddHijo(ins.recorrer())
+            
+        }
+        padre.AddHijo(HijoInstruccion)
+
+        padre.AddHijo(new Nodo("break",""))  
+        
+        return padre    
     }
 
 

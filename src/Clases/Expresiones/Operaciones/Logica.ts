@@ -92,7 +92,18 @@ export default class Logica extends Operacion implements Expresion{
     }
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("Exp","");
+
+        if(this.expU){
+            padre.AddHijo(new Nodo(this.op,""));
+            padre.AddHijo(this.exp1.recorrer());
+        }else{
+            padre.AddHijo(this.exp1.recorrer());
+            padre.AddHijo(new Nodo(this.op,""));
+            padre.AddHijo(this.exp2.recorrer());
+        }
+        
+       return padre;
     }
 
 }

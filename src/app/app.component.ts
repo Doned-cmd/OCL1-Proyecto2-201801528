@@ -13,7 +13,8 @@ import * as analizador from '../Clases/Analizar'
 })
 export class AppComponent {
   
-
+  MostrarErrores : boolean = false;
+  MostrarTablaSimbolos :boolean = true;
   //entrada : string = "";
   entrada : string = ""
   consola : string = "";
@@ -38,7 +39,7 @@ export class AppComponent {
       let ejecutar = analice.ejecutar(this.entrada);
 
       this.consola = ejecutar.consola;
-      document.getElementById("tablasimbols").innerHTML = ejecutar.ts;
+      //document.getElementById("tablasimbols").innerHTML = ejecutar.ts;
     }
     /**
      * Inicializamos la tabla de simbolos y controlador 
@@ -58,8 +59,12 @@ export class AppComponent {
   }
 
   
-  openPage(pageName) {
+  GenerarReporteTabla(pageName) {
     // Hide all elements with class="tabcontent" by default */
+
+    //this.MostrarTablaSimbolos = !this.MostrarTablaSimbolos
+    this.MostrarErrores = false;
+
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     
@@ -74,7 +79,39 @@ export class AppComponent {
     }
   
     document.getElementById(pageName).style.display = "block";
+
+    let analice = new analizador.Analizador();
+    this.consola = "";
+
+    if(this.entrada != ""){
+      let ejecutar = analice.ejecutar(this.entrada);
+
+      //this.consola = ejecutar.consola;
+      document.getElementById("tablasimbols").innerHTML = ejecutar.ts;
+    }
+
+    
+    
+  }
+
+
+  GenerarReporteAST(){
+    let analice = new analizador.Analizador();
+    this.consola = "";
   
+    if(this.entrada != ""){
+      let ejecutar = analice.recorrer(this.entrada);
+  
+      this.consola = ejecutar.GraficarSintactico();
+      
+    }
+  }
+
+  GenerarReporteErrores(){
+
+
+    this.MostrarErrores = !this.MostrarErrores
+    this.MostrarTablaSimbolos = false;
   }
   
-}
+} 

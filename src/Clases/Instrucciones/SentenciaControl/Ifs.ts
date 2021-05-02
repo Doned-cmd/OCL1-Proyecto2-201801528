@@ -69,8 +69,120 @@ export default class Ifs implements Instruccion{
         }
         return null;
     }
+    
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("if","")
+        padre.AddHijo(new Nodo("if",""))
+        padre.AddHijo(new Nodo("(",""))
+        let condicionif =  new Nodo("condicion","")
+        condicionif.AddHijo(this.condicion.recorrer())
+        padre.AddHijo(condicionif)
+        padre.AddHijo(new Nodo(")",""))
+
+
+        padre.AddHijo(new Nodo("{",""))
+        let HijoInstrucciones = new Nodo("Instrucciones","")
+
+        for(let ins of this.lista_ifs){
+            HijoInstrucciones.AddHijo(ins.recorrer())                
+        }
+
+        padre.AddHijo(HijoInstrucciones)
+        padre.AddHijo(new Nodo("}",""))
+
+
+        //Recorriendo lista de ifs o elses si hay
+        for (let ins of this.lista_elses){
+            if(ins instanceof Ifs){
+                if(ins.condicion != null){
+                    padre.AddHijo(new Nodo("else if",""))
+                    padre.AddHijo(new Nodo("(",""))
+                    let condicionElseIf = new Nodo("condicion","")
+                    condicionElseIf.AddHijo(ins.condicion.recorrer())            
+                    padre.AddHijo(condicionElseIf)
+                    padre.AddHijo(new Nodo(")",""))
+                    padre.AddHijo(new Nodo("{",""))
+                    
+                    padre.AddHijo(this.DevolverInstrucciones(ins.lista_ifs))
+                    
+                    padre.AddHijo(new Nodo("}",""))
+
+                    for (let insElse of ins.lista_elses){
+                        if(insElse instanceof Ifs){
+                            padre = insElse.RecorrerElseIf(padre)
+                        }
+                    }
+                    
+                }else{
+
+                    padre.AddHijo(new Nodo("else",""))
+                    padre.AddHijo(new Nodo("(",""))
+                    padre.AddHijo(new Nodo(")",""))
+                    padre.AddHijo(new Nodo("{",""))
+                    
+                    padre.AddHijo(this.DevolverInstrucciones(ins.lista_ifs))
+                    
+                    padre.AddHijo(new Nodo("}",""))
+                    
+
+
+                }   
+            }
+        }
+
+
+        return padre
+    }
+
+    RecorrerElseIf( padre : Nodo):Nodo{
+        
+        for (let ins of this.lista_elses){
+            if(ins instanceof Ifs){
+                if(ins.condicion != null){
+                    padre.AddHijo(new Nodo("else if",""))
+                    padre.AddHijo(new Nodo("(",""))
+                    let condicionElseIf = new Nodo("condicion","")
+                    condicionElseIf.AddHijo(ins.condicion.recorrer())            
+                    padre.AddHijo(condicionElseIf)
+                    padre.AddHijo(new Nodo(")",""))
+                    padre.AddHijo(new Nodo("{",""))
+                    
+                    padre.AddHijo(this.DevolverInstrucciones(ins.lista_ifs))
+                    
+                    padre.AddHijo(new Nodo("}",""))
+
+                    for (let insElse of ins.lista_elses){
+                        if(insElse instanceof Ifs){
+                            padre = insElse.RecorrerElseIf(padre)
+                        }
+                    }
+                }else{
+
+                    padre.AddHijo(new Nodo("else",""))
+                    padre.AddHijo(new Nodo("(",""))
+                    padre.AddHijo(new Nodo(")",""))
+                    padre.AddHijo(new Nodo("{",""))
+                    
+                    padre.AddHijo(this.DevolverInstrucciones(ins.lista_ifs))
+                    
+                    padre.AddHijo(new Nodo("}",""))
+
+
+                }   
+            }
+        }
+
+        return padre
+    }
+
+
+
+    DevolverInstrucciones(lista_instrucciones : Array<Instruccion>): Nodo{
+        let Instruct = new Nodo("Instrucciones","")
+        for(let ins of lista_instrucciones){
+            Instruct.AddHijo(ins.recorrer())
+        }
+        return Instruct
     }
 
 

@@ -6,7 +6,12 @@ import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
 
 export default class Continuar implements Instruccion{
 
-    constructor() { }
+    public linea : number;
+    public columna : number;
+    constructor(linea, columna) { 
+        this.linea = linea
+        this.columna = columna
+    }
     getTipo(controlador: Controlador, ts: TablaSimbolos): string {
         return "Continue";
     }
@@ -15,7 +20,8 @@ export default class Continuar implements Instruccion{
         return this;
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("Continue","");
+        return padre; 
     }
 
 }

@@ -38,7 +38,24 @@ export default class Default_SW implements Instruccion{
         return null;
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("Default","");
+
+        padre.AddHijo(new Nodo("Default",""))
+      
+        padre.AddHijo(new Nodo( ":",""))
+
+        
+        
+        let HijoInstruccion = new Nodo("Instrucciones","")
+        for(let ins of this.lista_instrucciones){
+            HijoInstruccion.AddHijo(ins.recorrer())
+            
+        }
+        padre.AddHijo(HijoInstruccion)
+        
+        padre.AddHijo(new Nodo("break",""))  
+        
+        return padre    
     }
 
 

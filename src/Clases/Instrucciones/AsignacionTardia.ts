@@ -9,7 +9,7 @@ import { tipo } from "../TablaSimbolos/Tipo";
 
 export default class Asignacion implements Instruccion{
 
-    public identificador : string;
+    public identificador : any;
     public valor : Expresion;
     public linea : number;
     public columna : number;
@@ -56,7 +56,13 @@ export default class Asignacion implements Instruccion{
         return null
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let Padre = new Nodo("Asignacion","")        
+        Padre.AddHijo(new Nodo(this.identificador.toString(),""))
+        Padre.AddHijo(new Nodo("=",""))
+        let igualacion =  new Nodo("expresion","")
+        igualacion.AddHijo(this.valor.recorrer())        
+        Padre.AddHijo(igualacion)
+        return Padre
     }
 
 }

@@ -151,7 +151,27 @@ export default class Asignacion implements Instruccion{
         return null
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("For","");
+        padre.AddHijo(new Nodo("For",""))
+        padre.AddHijo(new Nodo("(",""))
+        let hijoInicio = new Nodo("Declaracion","")
+        hijoInicio.AddHijo(this.declaracion.recorrer())
+        let hijoCondicion = new Nodo("Condicion","")
+        hijoCondicion.AddHijo(this.condicion.recorrer())
+        let hijoIteracion = new Nodo("Iteracion","")
+        hijoIteracion.AddHijo(this.iteracion.recorrer())
+        padre.AddHijo(hijoInicio)
+        padre.AddHijo(hijoCondicion)
+        padre.AddHijo(hijoIteracion)
+        padre.AddHijo(new Nodo(")",""))
+        padre.AddHijo(new Nodo("{",""))
+        let HijoInstruccion = new Nodo("instrucciones","")
+        for(let ins of this.lista_instrucciones){
+            HijoInstruccion.AddHijo(ins.recorrer())
+        } 
+        padre.AddHijo(HijoInstruccion)       
+        padre.AddHijo(new Nodo("}",""))
+        return padre
     }
     
 }

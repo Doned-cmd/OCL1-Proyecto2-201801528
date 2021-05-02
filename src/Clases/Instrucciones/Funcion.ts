@@ -30,7 +30,9 @@ export default class Funcion extends Simbolos implements Instruccion{
         if(!(ts.existe(this.identificador))){
             ts.agregar(this.identificador,this);
         }else{
-            //error semantico
+            let error = new Errores('Semantico', `Error , El simbolo ${this.identificador} ya existe en este contexto`, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`Error , El simbolo ${this.identificador} ya existe en este contexto`+ "Linea: " +this.linea );
         }
     }
 

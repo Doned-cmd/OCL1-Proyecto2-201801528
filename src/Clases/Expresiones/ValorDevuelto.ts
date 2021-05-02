@@ -66,7 +66,14 @@ export default class  ValorDevuelto implements Expresion{
     }
     recorrer(): Nodo {
        let padre = new Nodo("Primitivo","");
-        padre.AddHijo(new Nodo(this.primitivo.toString(),""));
+
+       if(this.primitivo instanceof Retornar){
+             //return this.primitivo.valor.getValor(controlador,ts);
+             padre.AddHijo(new Nodo(this.primitivo.valor.toString(),""));
+        }else{
+            padre.AddHijo(new Nodo(this.primitivo.toString(),""));
+        }
+       
 
        return padre;
     }

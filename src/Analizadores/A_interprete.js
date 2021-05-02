@@ -71,7 +71,7 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-var A_interprete = (function(){
+var a_interprete = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,18],$V1=[1,14],$V2=[1,15],$V3=[1,16],$V4=[1,17],$V5=[1,28],$V6=[1,29],$V7=[1,30],$V8=[1,31],$V9=[1,32],$Va=[1,20],$Vb=[1,22],$Vc=[1,23],$Vd=[1,24],$Ve=[1,25],$Vf=[1,26],$Vg=[1,21],$Vh=[1,27],$Vi=[2,5,18,19,20,22,25,26,27,28,29,31,36,40,42,47,48,49,50,51],$Vj=[1,50],$Vk=[1,43],$Vl=[1,42],$Vm=[1,41],$Vn=[1,44],$Vo=[1,45],$Vp=[1,46],$Vq=[1,47],$Vr=[1,48],$Vs=[1,49],$Vt=[1,56],$Vu=[1,58],$Vv=[1,59],$Vw=[1,60],$Vx=[2,15],$Vy=[1,70],$Vz=[1,71],$VA=[1,72],$VB=[1,73],$VC=[1,74],$VD=[1,75],$VE=[1,76],$VF=[1,77],$VG=[1,78],$VH=[1,79],$VI=[1,80],$VJ=[1,81],$VK=[1,82],$VL=[1,83],$VM=[1,84],$VN=[17,30,38,45,54,55,56,57,58,59,60,61,63,64,65,66,67,68,75],$VO=[17,30],$VP=[2,28],$VQ=[1,92],$VR=[17,30,38,45,60,61,75],$VS=[2,5,18,19,20,22,25,26,27,28,29,31,36,37,40,42,47,48,49,50,51,55,62,69,70,71,72,73,74],$VT=[30,38],$VU=[17,30,38,45,54,55,60,61,63,64,65,66,67,68,75],$VV=[17,30,38,45,54,55,56,57,60,61,63,64,65,66,67,68,75],$VW=[17,30,38,45,60,61,63,64,65,66,67,68,75],$VX=[1,145],$VY=[1,169],$VZ=[2,18,19,20,22,25,26,27,28,29,31,36,42,47,48,49,50,51],$V_=[2,40],$V$=[2,41],$V01=[2,39];
 var parser = {trace: function trace () { },
 yy: {},
@@ -102,16 +102,16 @@ case 14:
  this.$ = new ejecutar.default($$[$0-1], _$[$0-2].first_line, _$[$0-2].last_column); 
 break;
 case 15:
- this.$ = new detener.default(); 
+ this.$ = new detener.default(_$[$0-1].first_line, _$[$0-1].last_column); 
 break;
 case 16:
- this.$ = new Retornar.default($$[$0-1]); 
+ this.$ = new Retornar.default($$[$0-1],_$[$0-2].first_line, _$[$0-2].last_column); 
 break;
 case 17:
  this.$ = new Retornar.default( new primitivo.default("null", 5,$$[$0-1].first_line, $$[$0-1].last_column) ); 
 break;
 case 18:
- this.$ = new Contiunar.default(); console.log("continue declarado");
+ this.$ = new Contiunar.default(_$[$0-1].first_line, _$[$0-1].last_column); console.log("continue declarado");
 break;
 case 19:
  console.log("Error Sintactico" + yytext 
@@ -1042,7 +1042,7 @@ case 52: console.log("DECIMAL : "+ yy_.yytext); return 69
 break;
 case 53: console.log("ENTERO : "+ yy_.yytext); return 70
 break;
-case 54: console.log("ID : "+ yy_.yytext); return 31
+case 54: console.log("ID : "+ yy_.yytext.toString()); return 31
 break;
 case 55: console.log("CADENA : "+ yy_.yytext); return 71
 break;
@@ -1080,9 +1080,9 @@ return new Parser;
 
 
 if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
-exports.parser = A_interprete;
-exports.Parser = A_interprete.Parser;
-exports.parse = function () { return A_interprete.parse.apply(A_interprete, arguments); };
+exports.parser = a_interprete;
+exports.Parser = a_interprete.Parser;
+exports.parse = function () { return a_interprete.parse.apply(a_interprete, arguments); };
 exports.main = function commonjsMain (args) {
     if (!args[1]) {
         console.log('Usage: '+args[0]+' FILE');

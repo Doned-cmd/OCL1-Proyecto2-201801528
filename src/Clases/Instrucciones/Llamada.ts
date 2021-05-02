@@ -22,7 +22,7 @@ export default class Llamada implements Instruccion{
         this.linea = linea;
     }
     getTipo(controlador: Controlador, ts: TablaSimbolos): any {
-        return ts.getSimbolo(this.identificador).tipo.type
+        return ts.getSimbolo(this.identificador.toLocaleLowerCase()).tipo.type
     }
 
 

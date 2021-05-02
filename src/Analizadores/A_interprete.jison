@@ -93,7 +93,7 @@ caracter     (\'({escape2}|{aceptada2})\')
 /* SIMBOLOS ER */
 [0-9]+("."[0-9]+)\b        { console.log("DECIMAL : "+ yytext); return 'DECIMAL'}
 [0-9]+                    { console.log("ENTERO : "+ yytext); return 'ENTERO'}
-{id}                    { console.log("ID : "+ yytext); return 'ID'}
+{id}                    { console.log("ID : "+ yytext.toString()); return 'ID'}
 {cadena}                    { console.log("CADENA : "+ yytext); return 'CADENA'}
 {caracter}                    { console.log("CHARVAR : "+ yytext); return 'CHARVAR'}
 
@@ -196,10 +196,10 @@ instruccion : declaracion   { $$ = $1; }
             | funciones     { $$ = $1; }
             | llamada PYC   { $$ = $1; }
             | EJECUTAR llamada PYC { $$ = new ejecutar.default($2, @1.first_line, @1.last_column); }
-            | BREAK PYC     { $$ = new detener.default(); }
-            | RETURN e PYC     { $$ = new Retornar.default($2); }
+            | BREAK PYC     { $$ = new detener.default(@1.first_line, @1.last_column); }
+            | RETURN e PYC     { $$ = new Retornar.default($2,@1.first_line, @1.last_column); }
             | RETURN  PYC     { $$ = new Retornar.default( new primitivo.default("null", 5,$1.first_line, $1.last_column) ); }
-            | CONTINUE  PYC     { $$ = new Contiunar.default(); console.log("continue declarado");}
+            | CONTINUE  PYC     { $$ = new Contiunar.default(@1.first_line, @1.last_column); console.log("continue declarado");}
             | error         { console.log("Error Sintactico" + yytext 
                                     + "linea: " + this._$.first_line 
                                     + "columna: " + this._$.first_column); 
