@@ -77,12 +77,45 @@ export default class Declaracion implements Instruccion{
 
     recorrer(): Nodo {
         let padre = new Nodo("Declaracion","")
+        let hijoTipo = new Nodo("tipo","")
 
-        for(let simbolo of this.lista_simbolos){
-            let variable = simbolo as Simbolos;
-            
+        if(this.type.type == tipo.BOOLEANO){
+            hijoTipo.AddHijo(new Nodo("BOOLEANO",""))
+        }else if(this.type.type == tipo.CADENA){
+            hijoTipo.AddHijo(new Nodo("CADENA",""))
+        }else if(this.type.type == tipo.CARACTER){
+            hijoTipo.AddHijo(new Nodo("CARACTER",""))
+        }else if(this.type.type == tipo.DOBLE){
+            hijoTipo.AddHijo(new Nodo("DOBLE",""))
+        }else if(this.type.type == tipo.ENTERO){
+            hijoTipo.AddHijo(new Nodo("ENTERO",""))
         }
 
+        padre.AddHijo(hijoTipo)
+        
+        
+        let contador : number = 0
+        for(let simbolo of this.lista_simbolos){
+            let variable = simbolo as Simbolos;
+            contador++;
+            let hijoID = new Nodo("ID","")
+
+            hijoID.AddHijo(new Nodo(variable.identificador,""))
+            padre.AddHijo(hijoID)
+
+            //valor exp
+            if(variable.valor != null){
+                padre.AddHijo(new Nodo("=",""))
+                let hijoValor = new Nodo("valor","")
+                hijoValor.AddHijo( variable.valor.recorrer())
+                padre.AddHijo(hijoValor)
+            }
+
+            if (this.lista_simbolos.length-1 != contador){
+                padre.AddHijo(new Nodo(",",""))
+            }
+        }
+        
         return padre
     }
 

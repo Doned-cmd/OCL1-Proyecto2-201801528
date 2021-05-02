@@ -90,6 +90,37 @@ export default class Funcion extends Simbolos implements Instruccion{
 
         //TODO: AGREGAR NODOS PARAMETROS SOLO SI HAY
 
+        let contador : number = 0
+        let Hijoparametros =  new Nodo("parametros","")
+        for(let inst of this.lista_params){
+            let hijoTipo = new Nodo("tipo","")
+            if(inst.tipo.type == tipo.BOOLEANO){
+                hijoTipo.AddHijo(new Nodo("BOOLEANO",""))
+            }else if(inst.tipo.type == tipo.CADENA){
+                hijoTipo.AddHijo(new Nodo("CADENA",""))
+            }else if(inst.tipo.type == tipo.CARACTER){
+                hijoTipo.AddHijo(new Nodo("CARACTER",""))
+            }else if(inst.tipo.type == tipo.DOBLE){
+                hijoTipo.AddHijo(new Nodo("DOBLE",""))
+            }else if(inst.tipo.type == tipo.ENTERO){
+                hijoTipo.AddHijo(new Nodo("ENTERO",""))
+            }
+            Hijoparametros.AddHijo(hijoTipo)
+
+
+            let hijoID = new Nodo("ID","")
+
+            hijoID.AddHijo(new Nodo(inst.identificador,""))
+            Hijoparametros.AddHijo(hijoID)
+
+            if (this.lista_params.length-1 != contador){
+                Hijoparametros.AddHijo(new Nodo(",",""))
+            }
+    
+        }
+
+        padre.AddHijo( Hijoparametros)
+
         padre.AddHijo(new Nodo(")",""));
 
         padre.AddHijo(new Nodo("{",""));

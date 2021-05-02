@@ -108,7 +108,7 @@ case 16:
  this.$ = new Retornar.default($$[$0-1],_$[$0-2].first_line, _$[$0-2].last_column); 
 break;
 case 17:
- this.$ = new Retornar.default( new primitivo.default("null", 5,$$[$0-1].first_line, $$[$0-1].last_column) ); 
+ this.$ = new Retornar.default( new primitivo.default("null", 5,$$[$0-1].first_line, $$[$0-1].last_column), _$[$0-1].first_line, _$[$0-1].last_column); 
 break;
 case 18:
  this.$ = new Contiunar.default(_$[$0-1].first_line, _$[$0-1].last_column); console.log("continue declarado");

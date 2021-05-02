@@ -107,6 +107,10 @@ export default class Llamada implements Instruccion{
         padre.AddHijo(new Nodo("(",""));
 
         //TODO: AGREGAR NODOS HIJOS DE PARAMETROS
+        let Hijoparametros = new Nodo("parametros","")
+        for( let ins of this.parametros){
+            Hijoparametros.AddHijo(ins.recorrer())
+        }
         
         padre.AddHijo(new Nodo(")",""));
         

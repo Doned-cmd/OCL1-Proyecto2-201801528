@@ -198,7 +198,7 @@ instruccion : declaracion   { $$ = $1; }
             | EJECUTAR llamada PYC { $$ = new ejecutar.default($2, @1.first_line, @1.last_column); }
             | BREAK PYC     { $$ = new detener.default(@1.first_line, @1.last_column); }
             | RETURN e PYC     { $$ = new Retornar.default($2,@1.first_line, @1.last_column); }
-            | RETURN  PYC     { $$ = new Retornar.default( new primitivo.default("null", 5,$1.first_line, $1.last_column) ); }
+            | RETURN  PYC     { $$ = new Retornar.default( new primitivo.default("null", 5,$1.first_line, $1.last_column), @1.first_line, @1.last_column); }
             | CONTINUE  PYC     { $$ = new Contiunar.default(@1.first_line, @1.last_column); console.log("continue declarado");}
             | error         { console.log("Error Sintactico" + yytext 
                                     + "linea: " + this._$.first_line 

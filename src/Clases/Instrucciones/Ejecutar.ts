@@ -25,7 +25,12 @@ export default class Ejecutar implements Instruccion{
     }
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("Llamada","")
+        padre.AddHijo(new Nodo("exec",""))
+        let hijollamada = new Nodo("FUNCION","")
+        hijollamada.AddHijo(this.llamada.recorrer())
+        padre.AddHijo(hijollamada)
+        return padre
     }
 
 }
