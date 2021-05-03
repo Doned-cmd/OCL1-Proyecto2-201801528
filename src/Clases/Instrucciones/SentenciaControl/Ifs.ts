@@ -32,7 +32,7 @@ export default class Ifs implements Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let ts_local = new TablaSimbolos(ts);
-
+        controlador.ListaTablaSimbolos.push(ts_local);
         let valor_condicion = this.condicion.getValor(controlador, ts);
 
         if(this.condicion.getTipo(controlador, ts) == tipo.BOOLEANO){

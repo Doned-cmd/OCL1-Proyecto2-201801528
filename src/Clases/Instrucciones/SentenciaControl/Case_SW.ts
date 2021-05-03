@@ -26,7 +26,7 @@ export default class Case_SW implements Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let ts_local = new TablaSimbolos(ts);
-
+        controlador.agregarTabla(ts_local);
         for(let ins of this.lista_instrucciones){
             let res = ins.ejecutar(controlador,ts_local);
 

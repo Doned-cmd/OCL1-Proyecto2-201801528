@@ -49,7 +49,7 @@ export default class Asignacion implements Instruccion{
                 while(this.condicion.getValor(controlador,ts_local)){
                     let ts_local_ciclo = new TablaSimbolos(ts_local);
                     
-                    
+                    controlador.ListaTablaSimbolos.push(ts_local);
                     for(let ins of this.lista_instrucciones){
                         let res = ins.ejecutar(controlador,ts_local_ciclo);
 
@@ -106,7 +106,7 @@ export default class Asignacion implements Instruccion{
                 while(this.condicion.getValor(controlador,ts)){
                     let ts_local_ciclo = new TablaSimbolos(ts);
                     
-                    
+                    controlador.ListaTablaSimbolos.push(ts_local_ciclo);
                     for(let ins of this.lista_instrucciones){
                         let res = ins.ejecutar(controlador,ts_local_ciclo);
 

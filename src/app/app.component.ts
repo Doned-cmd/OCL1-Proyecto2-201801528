@@ -5,6 +5,9 @@ import { TablaSimbolos } from 'src/Clases/TablaSimbolos/TablaSimbolos';
 
 import * as analizador from '../Clases/Analizar'
 
+import {graphviz} from "d3-graphviz"
+import {wasmFolder} from "@hpcc-js/wasm"
+
 
 @Component({
   selector: 'app-root',
@@ -15,20 +18,48 @@ export class AppComponent {
   
   MostrarErrores : boolean = false;
   MostrarTablaSimbolos :boolean = true;
+  MostrarAst : boolean = false
   //entrada : string = "";
   entrada : string = ""
   consola : string = "";
+  
 
-  recorrer(): void{
+
+  recorrer(pageName): void{
     let ana = new analizador.Analizador();
 
+    this.consola = "";
     if(this.entrada != ""){
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+    
+      // Remove the background color of all tablinks/buttons
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+      }
+    
+      document.getElementById(pageName).style.display = "block";
+  
+
+
+
       console.log("Vamos a graficar");
+      //ana.ejecutar(this.entrada)
       let nodo_ast = ana.recorrer(this.entrada);
 
       let grafo = nodo_ast.GraficarSintactico();  //Aqui tenemos la cadena de graphviz para graficar
-
+      //let element = document.createElement('a');
+      //element.setAttribute('href')
+      wasmFolder('/assets/@hpcc-js/wasm/dist/')
+      graphviz('#graph').renderDot(grafo)
+      //this.consola =  grafo
     }
+    
   }
 
   ejecutar():void{
@@ -62,9 +93,44 @@ export class AppComponent {
   GenerarReporteTabla(pageName) {
     // Hide all elements with class="tabcontent" by default */
 
-    //this.MostrarTablaSimbolos = !this.MostrarTablaSimbolos
-    this.MostrarErrores = false;
+    
 
+    //if(this.MostrarTablaSimbolos){
+
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+    
+      // Remove the background color of all tablinks/buttons
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+      }
+    
+      document.getElementById(pageName).style.display = "block";
+  
+      let analice = new analizador.Analizador();
+      this.consola = "";
+  
+      if(this.entrada != ""){
+        let ejecutar = analice.ejecutar(this.entrada);
+  
+        //this.consola = ejecutar.consola;
+        document.getElementById("tablasimbols").innerHTML = ejecutar.ts;
+      }
+    //}
+
+    //this.MostrarTablaSimbolos = !this.MostrarTablaSimbolos
+    //this.MostrarErrores = false;
+
+  }
+
+
+
+  GenerarReporteErrores(pageName){
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     
@@ -87,31 +153,40 @@ export class AppComponent {
       let ejecutar = analice.ejecutar(this.entrada);
 
       //this.consola = ejecutar.consola;
-      document.getElementById("tablasimbols").innerHTML = ejecutar.ts;
+      document.getElementById("tablasErrores").innerHTML = ejecutar.errores;
     }
+  }
 
+  CargarArchivo(event : any){
+      let files = event.target.files;
     
-    
+      var lector = new FileReader();
+      lector.readAsText(files[0]);
+      lector.onload = () => {
+      let texto:any = lector.result;
+      if(texto){
+        this.entrada = texto;
+      }
+    }
   }
 
 
-  GenerarReporteAST(){
-    let analice = new analizador.Analizador();
-    this.consola = "";
-  
+  GuardarArchivo(){
+
     if(this.entrada != ""){
-      let ejecutar = analice.recorrer(this.entrada);
-  
-      this.consola = ejecutar.GraficarSintactico();
-      
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.entrada));
+      element.setAttribute('download', "Code.ty");
+    
+      element.style.display = 'none';
+      document.body.appendChild(element);
+    
+      element.click();
+    
+      document.body.removeChild(element);
     }
   }
 
-  GenerarReporteErrores(){
-
-
-    this.MostrarErrores = !this.MostrarErrores
-    this.MostrarTablaSimbolos = false;
-  }
+  
   
 } 

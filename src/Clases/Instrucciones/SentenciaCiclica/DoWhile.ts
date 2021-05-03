@@ -39,6 +39,7 @@ export default class While implements Instruccion{
             for(let ins of this.lista_instrucciones){
 
                 let ts_localx = new TablaSimbolos(ts);
+                controlador.agregarTabla(ts_localx);
                 let res = ins.ejecutar(controlador,ts_localx);
                 //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
                 if(ins instanceof Detener || res instanceof Detener ){

@@ -34,7 +34,7 @@ export default class While implements Instruccion{
             while(this.condicion.getValor(controlador,ts)){
                 
                 let ts_local = new TablaSimbolos(ts);
-
+                controlador.agregarTabla(ts_local);
                 for(let ins of this.lista_instrucciones){
                     let res = ins.ejecutar(controlador,ts_local);
                      //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 

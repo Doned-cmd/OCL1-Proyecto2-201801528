@@ -33,7 +33,7 @@ export default class Switch implements Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let ts_local = new TablaSimbolos(ts);
-
+        controlador.ListaTablaSimbolos.push(ts_local);
         let valor_condicionPrincipal = this.condicionPrincipal.getValor(controlador, ts);
         
         let EjecutarDefault : boolean = true;

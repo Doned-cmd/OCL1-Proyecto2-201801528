@@ -38,6 +38,7 @@ export default class Funcion extends Simbolos implements Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let ts_local = new TablaSimbolos(ts);
+        controlador.ListaTablaSimbolos.push(ts_local);
         let comprobadorReturns : boolean = true;
         for(let ins of this.lista_instrucciones){
             let r = ins.ejecutar(controlador,ts_local);

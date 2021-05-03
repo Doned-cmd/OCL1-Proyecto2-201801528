@@ -1,12 +1,22 @@
 
-
-<mdb-navbar SideClass="navbar navbar-expand-lg elegant-color">
-  <mdb-navbar-brand>
-      <a class="navbar-brand" href="#">OLC1-Proyecto2-201801528 <i class="fas fa-cogs"></i></a>
-  </mdb-navbar-brand>
-  <links>
      
       <form class="form-inline">
+
+        <form class="form-inline">
+         
+            
+            <input accept=".ty" id="archivo" type="file" (change)="CargarArchivo($event)" >
+            
+            <!--<input type="submit" value="Enviar">-->
+          
+        </form>
+        
+        <form class="form-inline">
+          <button mdbBtn (click)="GuardarArchivo()"   color="success" outline="true" class="waves-light" mdbWavesEffect type="button" >Guardar Archivo</button>
+        </form>
+
+
+        
         <form class="form-inline">          
             <button mdbBtn (click)="ejecutar()" color="success" outline="true" class="waves-light" mdbWavesEffect type="button"><i class="fas fa-play"></i>Ejecutar</button>
             
@@ -15,12 +25,18 @@
           <button mdbBtn (click)="GenerarReporteTabla('TablaSim')"   color="success" outline="true" class="waves-light" mdbWavesEffect type="button" >Tabla de Simbolos</button>
         </form>
 
+
         <form class="form-inline">
-          <button mdbBtn (click)="recorrer()"   color="success" outline="true" class="waves-light" mdbWavesEffect type="button" >Reporte</button>
+          <button mdbBtn (click)="recorrer('Ast')"   color="success" outline="true" class="waves-light" mdbWavesEffect type="button" >Reporte Ast</button>
+        </form>
+
+
+        <form class="form-inline">
+          <button mdbBtn (click)="GenerarReporteErrores('TablaError')"   color="success" outline="true" class="waves-light" mdbWavesEffect type="button" >Tabla de Errores</button>
         </form>
     </form>
-  </links>
-</mdb-navbar>
+
+    
 
 
 <!-- Start your project here-->
@@ -73,7 +89,16 @@
       </table>
     </div>
 
-
+    <div id="Ast" *ngIf="MostrarTablaSimbolos" class="tabcontent" style="background-color: #212121;">
+      <div class="overflow-auto" id = "graph" style= "text-align: center; " ></div>
+      
+      
+    </div>
+    <div id="TablaError" *ngIf="MostrarTablaSimbolos" class="tabcontent" style="background-color: #212121;">
+      <table mdbTable id= "tablasErrores" style="width:100%" bordered="true">
+      
+      </table>
+    </div>
  
 <!--</div>-->
 

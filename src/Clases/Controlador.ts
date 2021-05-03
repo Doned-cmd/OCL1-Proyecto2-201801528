@@ -9,8 +9,10 @@ export default class Controlador{
 
     public errores : Array<Errores>;
     public consola : string;
+    public ListaTablaSimbolos : Array<TablaSimbolos>
 
     constructor() {
+        this.ListaTablaSimbolos = new Array<TablaSimbolos>();
         this.errores = new Array<Errores>();
         this.consola = "";
     }
@@ -27,11 +29,11 @@ export default class Controlador{
      * @param ts accede a la tabla de simbolos
      * @returns retorna el cuerpo de la tabla de simbolos de html
      */
-    graficar_ts(controlador:Controlador, ts:TablaSimbolos):string{
+    graficar_ts(controlador:Controlador):string{
         var cuerpohtml = "<thead class=\"black white-text\"><tr><td colspan=\"6\">Tabla de Simbolos </td></tr><tr><th>Rol</th><th>Nombre</th><th>Tipo</th><th>Ambito</th><th>Valor</th><th>Parametros</th></tr></thead>";
-
-        while(ts != null){
-
+        let contador: number = 0;
+        //while(ts != null){
+        for (let ts of this.ListaTablaSimbolos){
             for(let sim of ts.tabla.values()){
                 console.log(`simbolo`);
                 
@@ -41,9 +43,38 @@ export default class Controlador{
                 "</td><td>" + this.getValor(sim) + 
                 "</td><td>" + this.parametros(sim) +"</td>" +  "</tr>";
             }
+        }
+            
+          //  ts = ts.ant;
+        //}
+        
+        
+        return cuerpohtml;
+    }
+
+    
+    agregarTabla(ts:TablaSimbolos){
+        this.ListaTablaSimbolos.push(ts);
+    }
+
+
+    graficar_er(){
+        var cuerpohtml = "<thead class=\"black white-text\"><tr><td colspan=\"6\">Tabla de Errores </td></tr><tr><th>#</th><th>Tipo De Error</th><th>Descripcion</th><th>Linea</th><th>Columna</th></tr></thead>";
+        let numero: number = 0
+        for(let sim of this.errores){
+
+            
+                console.log(`simbolo`);
+                
+                cuerpohtml += "<tr mdbTableCol class=\"grey lighten-1 black-text\">"+
+                "<td>" +  numero + "</td><th scope=\"row\">" + sim.tipo + 
+                "</th><td>" + sim.descripcion +
+                "</td><td>" + sim.linea +                 
+                "</td><td>" + sim.columna +"</td>" +  "</tr>";
             
             
-            ts = ts.ant;
+            numero++;
+            
         }
         
         
