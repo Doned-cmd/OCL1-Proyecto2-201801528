@@ -9,6 +9,7 @@ import Detener from "./SentenciaTransferencia/Break";
 import Continuar from "./SentenciaTransferencia/Continue";
 import Return from "./SentenciaTransferencia/Return";
 import { tipo } from "../TablaSimbolos/Tipo";
+import { TablaSimbolosGraf } from "../TablaSimbolos/TablaSimbolosGraf";
 
 export default class Funcion extends Simbolos implements Instruccion{
 
@@ -38,7 +39,7 @@ export default class Funcion extends Simbolos implements Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let ts_local = new TablaSimbolos(ts);
-        controlador.ListaTablaSimbolos.push(ts_local);
+        controlador.ListaTablaSimbolos.push(new TablaSimbolosGraf(ts_local,"Funcion: " + this.identificador));
         let comprobadorReturns : boolean = true;
         for(let ins of this.lista_instrucciones){
             let r = ins.ejecutar(controlador,ts_local);

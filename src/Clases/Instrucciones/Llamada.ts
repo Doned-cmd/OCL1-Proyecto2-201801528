@@ -5,6 +5,7 @@ import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
 import Simbolos from "../TablaSimbolos/Simbolos";
 import { TablaSimbolos } from "../TablaSimbolos/TablaSimbolos";
+import { TablaSimbolosGraf } from "../TablaSimbolos/TablaSimbolosGraf";
 import { tipo } from "../TablaSimbolos/Tipo";
 import Funcion from "./Funcion";
 
@@ -31,7 +32,7 @@ export default class Llamada implements Instruccion{
 
         if(ts.existe(this.identificador.toLowerCase())){
             let ts_local = new TablaSimbolos(ts);
-            controlador.ListaTablaSimbolos.push(ts_local);
+            controlador.ListaTablaSimbolos.push(new TablaSimbolosGraf(ts_local, "llamada: "+ this.identificador));
             let simbolo_funcion = ts.getSimbolo(this.identificador.toLowerCase()) as Funcion;
             
             //TODO: Hacer un metodo para validar si los parametros de la llamada son del mismo tipo que el de la funcion

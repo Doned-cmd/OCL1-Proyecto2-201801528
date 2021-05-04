@@ -4,6 +4,7 @@ import * as sintactico_interprete from '../Analizadores/A_interprete'
 import Controlador from './Controlador';
 import { TablaSimbolos } from './TablaSimbolos/TablaSimbolos';
 import Nodo from './Ast/Nodo';
+import { TablaSimbolosGraf } from './TablaSimbolos/TablaSimbolosGraf';
 
 
 
@@ -41,7 +42,7 @@ export class Analizador{
 
             ast.ejecutar(controlado, ts_global);
 
-            controlado.ListaTablaSimbolos.push(ts_global);
+            controlado.ListaTablaSimbolos.push(new TablaSimbolosGraf(ts_global,"global"));
             let ts_html = controlado.graficar_ts(controlado);
 
             let Errores_html = controlado.graficar_er()

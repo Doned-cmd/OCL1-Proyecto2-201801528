@@ -89,6 +89,7 @@ caracter     (\'({escape2}|{aceptada2})\')
 "break"               { console.log("BREAK : "+ yytext); return 'BREAK'}
 "return"               { console.log("RETURN : "+ yytext); return 'RETURN'}
 "continue"               { console.log("CONTINUE : "+ yytext); return 'CONTINUE'}
+"new"               { console.log("CONTINUE : "+ yytext); return 'NEW'}
 
 /* SIMBOLOS ER */
 [0-9]+("."[0-9]+)\b        { console.log("DECIMAL : "+ yytext); return 'DECIMAL'}
@@ -211,7 +212,13 @@ instruccion : declaracion   { $$ = $1; }
             ;
 
 declaracion : tipo lista_simbolos PYC   { $$ = new declaracion.default($1, $2, @1.first_line, @1.last_column); }
+            | tipo CORA CORC ID IGUAL NEW TIPO CORA e CORC PYC          {  }    
+            | tipo CORA CORC ID IGUAL LLAVA ListaVector LLAVC          {  } 
             ; 
+
+ListaVector : ListaVector COMA e {}
+            | e {}
+            ;
 
 tipo : INT      { $$ = new tipo.default('ENTERO'); }
     | DOUBLE    { $$ = new tipo.default('DOBLE'); }
@@ -254,6 +261,7 @@ sent_switch : SWITCH PARA e PARC LLAVA switch_case LLAVC { $$ = new Switch.defau
 
 switch_case : switch_case CASE e DSPNTS  instrucciones  BREAK PYC    { $$ = $1; $$.push(new Case_SW.default($3, $5, @1.first_line, @1.last_column)); }
             | switch_case DEFAULT  DSPNTS  instrucciones  BREAK PYC   { $$ = $1; $$.push(new Default_SW.default( $4, @1.first_line, @1.last_column)); }
+            | DEFAULT  DSPNTS  instrucciones  BREAK PYC   { $$ = new Array(); $$.push(new Default_SW.default( $3, @1.first_line, @1.last_column)); }
             | CASE e DSPNTS  instrucciones BREAK PYC     { $$ = new Array(); $$.push( new Case_SW.default($2, $4, @1.first_line, @1.last_column) ); } //{console.log("Caso detectado")}        
             ;            
         

@@ -4,6 +4,7 @@ import Controlador from "src/Clases/Controlador";
 import { Expresion } from "src/Clases/Interfaces/Expresion";
 import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
+import { TablaSimbolosGraf } from "src/Clases/TablaSimbolos/TablaSimbolosGraf";
 import { tipo } from "src/Clases/TablaSimbolos/Tipo";
 import Detener from "../SentenciaTransferencia/Break";
 import Continuar from "../SentenciaTransferencia/Continue";
@@ -32,7 +33,7 @@ export default class Ifs implements Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let ts_local = new TablaSimbolos(ts);
-        controlador.ListaTablaSimbolos.push(ts_local);
+        controlador.ListaTablaSimbolos.push(new TablaSimbolosGraf(ts_local, "SENTENCIA IF"));
         let valor_condicion = this.condicion.getValor(controlador, ts);
 
         if(this.condicion.getTipo(controlador, ts) == tipo.BOOLEANO){

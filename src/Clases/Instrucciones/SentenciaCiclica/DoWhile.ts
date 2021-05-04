@@ -5,6 +5,7 @@ import Controlador from "src/Clases/Controlador";
 import { Expresion } from "src/Clases/Interfaces/Expresion";
 import { Instruccion } from "src/Clases/Interfaces/Instruccion";
 import { TablaSimbolos } from "src/Clases/TablaSimbolos/TablaSimbolos";
+import { TablaSimbolosGraf } from "src/Clases/TablaSimbolos/TablaSimbolosGraf";
 import Detener from "../SentenciaTransferencia/Break";
 import Continuar from "../SentenciaTransferencia/Continue";
 import Retornar from "../SentenciaTransferencia/Return";
@@ -39,7 +40,7 @@ export default class While implements Instruccion{
             for(let ins of this.lista_instrucciones){
 
                 let ts_localx = new TablaSimbolos(ts);
-                controlador.agregarTabla(ts_localx);
+                controlador.ListaTablaSimbolos.push(new TablaSimbolosGraf(ts_localx, "CICLO DO WHILE"));
                 let res = ins.ejecutar(controlador,ts_localx);
                 //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 
                 if(ins instanceof Detener || res instanceof Detener ){
@@ -56,7 +57,7 @@ export default class While implements Instruccion{
             while(this.condicion.getValor(controlador,ts)){
 
                 let ts_local = new TablaSimbolos(ts);
-
+                controlador.ListaTablaSimbolos.push(new TablaSimbolosGraf(ts_local, "CICLO DO WHILE"));
                 for(let ins of this.lista_instrucciones){
                     let res = ins.ejecutar(controlador,ts_local);
                      //TODO verificar si res es de tipo CONTINUE, BREAK, RETORNO 

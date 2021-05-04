@@ -1,6 +1,7 @@
 import Errores from "./Ast/Errores";
 import Simbolos from "./TablaSimbolos/Simbolos";
 import { TablaSimbolos } from "./TablaSimbolos/TablaSimbolos";
+import { TablaSimbolosGraf } from "./TablaSimbolos/TablaSimbolosGraf";
 
 /**
  * @class Clase que nos permitira llevar el control de todo el programa. 
@@ -9,10 +10,10 @@ export default class Controlador{
 
     public errores : Array<Errores>;
     public consola : string;
-    public ListaTablaSimbolos : Array<TablaSimbolos>
+    public ListaTablaSimbolos : Array<TablaSimbolosGraf>
 
     constructor() {
-        this.ListaTablaSimbolos = new Array<TablaSimbolos>();
+        this.ListaTablaSimbolos = new Array<TablaSimbolosGraf>();
         this.errores = new Array<Errores>();
         this.consola = "";
     }
@@ -34,12 +35,12 @@ export default class Controlador{
         let contador: number = 0;
         //while(ts != null){
         for (let ts of this.ListaTablaSimbolos){
-            for(let sim of ts.tabla.values()){
+            for(let sim of ts.TablaSimbolos.tabla.values()){
                 console.log(`simbolo`);
                 
                 cuerpohtml += "<tr mdbTableCol class=\"grey lighten-1 black-text\"><th scope=\"row\">" +  this.getRol(sim) + "</th><td>" + sim.identificador + 
                 "</td><td>" + this.getTipo(sim) +"</td>"  + 
-                "</td><td>" + this.getAmbito() + 
+                "</td><td>" + ts.Ambito + 
                 "</td><td>" + this.getValor(sim) + 
                 "</td><td>" + this.parametros(sim) +"</td>" +  "</tr>";
             }
@@ -53,8 +54,8 @@ export default class Controlador{
     }
 
     
-    agregarTabla(ts:TablaSimbolos){
-        this.ListaTablaSimbolos.push(ts);
+    agregarTabla(ts:TablaSimbolos, ambito:string){
+        this.ListaTablaSimbolos.push(new TablaSimbolosGraf(ts, ambito));
     }
 
 

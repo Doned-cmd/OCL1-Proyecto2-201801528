@@ -26,7 +26,7 @@ export default class Default_SW implements Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let ts_local = new TablaSimbolos(ts);
-        controlador.agregarTabla(ts_local);
+        controlador.agregarTabla(ts_local, "sentencia DEFAULT DE SWITCH");
         for(let ins of this.lista_instrucciones){
             let res = ins.ejecutar(controlador,ts_local);
 

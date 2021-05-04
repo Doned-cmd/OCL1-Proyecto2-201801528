@@ -21,12 +21,16 @@ export default class Case_SW implements Instruccion{
         this.linea = linea;
     }
     getTipo(controlador: Controlador, ts: TablaSimbolos) {
+        return this.condicion.getTipo(controlador, ts)
+    }
+
+    getValor(controlador: Controlador, ts: TablaSimbolos) {
         return this.condicion.getValor(controlador, ts)
     }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let ts_local = new TablaSimbolos(ts);
-        controlador.agregarTabla(ts_local);
+        controlador.agregarTabla(ts_local,"sentencia Case de switch");
         for(let ins of this.lista_instrucciones){
             let res = ins.ejecutar(controlador,ts_local);
 
