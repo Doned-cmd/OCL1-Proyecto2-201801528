@@ -126,12 +126,14 @@ caracter     (\'({escape2}|{aceptada2})\')
     const relacional = require('../Clases/Expresiones/Operaciones/Relacional');
     const primitivo = require('../Clases/Expresiones/Primitivo');
     const ValorDevuelto = require('../Clases/Expresiones/ValorDevuelto');
-
+    const primitivoVector = require('../Clases/Expresiones/PrimitivoVector');
 
     const ast = require('../Clases/Ast/Ast');
     const declaracion = require('../Clases/Instrucciones/Declaracion');
     const declaracionVectores = require('../Clases/Instrucciones/DeclaracionVectores');
+
     const asignacion = require('../Clases/Instrucciones/Asignacion');
+    const asignacionVector = require('../Clases/Instrucciones/AsignacionVector');
     const asignacionTardia = require('../Clases/Instrucciones/AsignacionTardia');
     const simbolo = require('../Clases/TablaSimbolos/Simbolos');
     const tipo = require('../Clases/TablaSimbolos/Tipo');
@@ -213,8 +215,8 @@ instruccion : declaracion   { $$ = $1; }
             ;
 
 declaracion : tipo lista_simbolos PYC   { $$ = new declaracion.default($1, $2, @1.first_line, @1.last_column); }
-            | tipo  ID IGUAL NEW tipo CORA e CORC PYC          { $$ = new declaracionVectores.default($1 , $2, false, $7, @1.first_line, @1.last_column, $5,) ;}    
-            | tipo  ID IGUAL LLAVA ListaVector LLAVC  PYC      { $$ = new declaracionVectores.default($1 , $2, true, $5, @1.first_line, @1.last_column); } 
+            | tipo CORA CORC ID IGUAL NEW tipo CORA e CORC PYC          { $$ = new declaracionVectores.default(new tipo.default($1.stype+"VEC") , $4, false, $9, @1.first_line, @1.last_column, $9,) ;}    
+            | tipo CORA CORC ID IGUAL LLAVA ListaVector LLAVC  PYC      { $$ = new declaracionVectores.default(new tipo.default($1.stype+"VEC")  , $4, true, $7, @1.first_line, @1.last_column); } 
             ; 
 
 ListaVector : ListaVector COMA e { $$ = $1; $$.push($3);}
@@ -226,11 +228,6 @@ tipo : INT      { $$ = new tipo.default('ENTERO'); }
     | STRING    { $$ = new tipo.default('STRING'); }
     | CHAR      { $$ = new tipo.default('CARACTER'); }
     | BOOLEAN   { $$ = new tipo.default('BOOLEAN'); }
-    | INT CORA CORC      { $$ = new tipo.default('ENTEROVEC'); }
-    | DOUBLE CORA CORC   { $$ = new tipo.default('DOBLEVEC'); }
-    | STRING CORA CORC   { $$ = new tipo.default('STRINGVEC'); }
-    | CHAR  CORA CORC    { $$ = new tipo.default('CARACTERVEC'); }
-    | BOOLEAN CORA CORC  { $$ = new tipo.default('BOOLEANOVEC'); }
     ;
 /**
     lista de simbolos
@@ -246,6 +243,7 @@ lista_simbolos : lista_simbolos COMA ID         { $$ = $1; $$.push(new simbolo.d
 
 asignacion : ID IGUAL e PYC   { $$ = new asignacion.default($1,$3, @1.first_line, @1.last_column); }
             | ID incremento PYC           { $$ = new asignacionTardia.default($1,$2, @1.first_line, @1.last_column); }
+            | ID CORA e CORC IGUAL e PYC           { $$ = new asignacionVector.default($1,$3, $6,@1.first_line, @1.last_column); }
             ; 
 
 asignacionFor : ID IGUAL e    { $$ = new asignacion.default($1,$3, @1.first_line, @1.last_column); }
@@ -332,6 +330,7 @@ e :   e MAS e                   {$$ = new aritmetica.default($1, '+', $3, $1.fir
     //| DECRE          {$$ = new aritmetica.default(new primitivo.default(1, $1.first_line, $1.last_column), $1.first_line, $1.last_column, false), '-', new primitivo.default(1, $1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
     //| incremento        {$$ = $1}
     | llamada                   {$$ = new ValorDevuelto.default($1, true,$1.first_line, $1.last_column);}
+    | ID CORA e CORC                   {$$ = new primitivoVector.default($1, $3,$1.first_line, $1.last_column);}
     ;
 
 incremento:  INCRE          {$$ = new aritmetica.default(new primitivo.default(0, 0,$1.first_line, $1.last_column),  '+', new primitivo.default(1, 0,$1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}

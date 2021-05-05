@@ -23,6 +23,11 @@ export default class Identificador implements Expresion{
 
         if(existe_id != null ){
             return existe_id.tipo.type; // ENTERO, DECIMAL, BOO
+        }else{
+            let error = new Errores('Semantico', `No existe la variable ${this.identificador} en la tabla de simbolos.`, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`No existe la variable ${this.identificador} en la tabla de simbolos.`+ "Linea: " +this.linea );
+            return null;
         }
     }
 

@@ -50,7 +50,7 @@ export default class Tipo{
             return tipo.ENTEROVEC;
         }else if(stype == 'STRINGVEC'){
             return tipo.CADENAVEC;
-        }else if(stype == 'BOOLEANOVEC'){
+        }else if(stype == 'BOOLEANVEC'){
             return tipo.BOOLEANOVEC;
         }else if(stype == 'CARACTERVEC'){
             return tipo.CARACTERVEC;
