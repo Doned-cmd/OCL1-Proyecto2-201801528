@@ -130,6 +130,7 @@ caracter     (\'({escape2}|{aceptada2})\')
 
     const ast = require('../Clases/Ast/Ast');
     const declaracion = require('../Clases/Instrucciones/Declaracion');
+    const declaracionVectores = require('../Clases/Instrucciones/DeclaracionVectores');
     const asignacion = require('../Clases/Instrucciones/Asignacion');
     const asignacionTardia = require('../Clases/Instrucciones/AsignacionTardia');
     const simbolo = require('../Clases/TablaSimbolos/Simbolos');
@@ -212,12 +213,12 @@ instruccion : declaracion   { $$ = $1; }
             ;
 
 declaracion : tipo lista_simbolos PYC   { $$ = new declaracion.default($1, $2, @1.first_line, @1.last_column); }
-            | tipo CORA CORC ID IGUAL NEW TIPO CORA e CORC PYC          {  }    
-            | tipo CORA CORC ID IGUAL LLAVA ListaVector LLAVC          {  } 
+            | tipo  ID IGUAL NEW tipo CORA e CORC PYC          { $$ = new declaracionVectores.default($1 , $2, false, $7, @1.first_line, @1.last_column, $5,) ;}    
+            | tipo  ID IGUAL LLAVA ListaVector LLAVC  PYC      { $$ = new declaracionVectores.default($1 , $2, true, $5, @1.first_line, @1.last_column); } 
             ; 
 
-ListaVector : ListaVector COMA e {}
-            | e {}
+ListaVector : ListaVector COMA e { $$ = $1; $$.push($3);}
+            | e { $$ = new Array(); $$.push($1);}
             ;
 
 tipo : INT      { $$ = new tipo.default('ENTERO'); }
@@ -225,6 +226,11 @@ tipo : INT      { $$ = new tipo.default('ENTERO'); }
     | STRING    { $$ = new tipo.default('STRING'); }
     | CHAR      { $$ = new tipo.default('CARACTER'); }
     | BOOLEAN   { $$ = new tipo.default('BOOLEAN'); }
+    | INT CORA CORC      { $$ = new tipo.default('ENTEROVEC'); }
+    | DOUBLE CORA CORC   { $$ = new tipo.default('DOBLEVEC'); }
+    | STRING CORA CORC   { $$ = new tipo.default('STRINGVEC'); }
+    | CHAR  CORA CORC    { $$ = new tipo.default('CARACTERVEC'); }
+    | BOOLEAN CORA CORC  { $$ = new tipo.default('BOOLEANOVEC'); }
     ;
 /**
     lista de simbolos

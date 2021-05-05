@@ -8,7 +8,12 @@ export enum tipo{
     BOOLEANO,
     CARACTER,
     CADENA, 
-    VOID
+    VOID,
+    ENTEROVEC,
+    DOBLEVEC,
+    BOOLEANOVEC,
+    CARACTERVEC,
+    CADENAVEC
 }
 
 /**
@@ -38,6 +43,17 @@ export default class Tipo{
             return tipo.VOID;
         }else if(stype == 'CARACTER'){
             return tipo.CARACTER;
+        }
+        else if(stype == 'DOBLEVEC'){
+            return tipo.DOBLEVEC;
+        }else if(stype == 'ENTEROVEC'){
+            return tipo.ENTEROVEC;
+        }else if(stype == 'STRINGVEC'){
+            return tipo.CADENAVEC;
+        }else if(stype == 'BOOLEANOVEC'){
+            return tipo.BOOLEANOVEC;
+        }else if(stype == 'CARACTERVEC'){
+            return tipo.CARACTERVEC;
         }
     }
 
