@@ -76,6 +76,13 @@ caracter     (\'({escape2}|{aceptada2})\')
 "char"               { console.log("CHAR : "+ yytext); return 'CHAR'}
 "boolean"               { console.log("BOOLEAN : "+ yytext); return 'BOOLEAN'}
 "print"               { console.log("PRINT : "+ yytext); return 'PRINT'}
+"toLower"             { console.log("PRINT : "+ yytext); return 'TOLOWER'}          
+"toUpper"             { console.log("PRINT : "+ yytext); return 'TOUPPER'}
+"length"             { console.log("PRINT : "+ yytext); return 'LENGTH'} 
+"truncate"             { console.log("PRINT : "+ yytext); return 'TRUNCATE'} 
+"round"             { console.log("PRINT : "+ yytext); return 'ROUND'} 
+"typeof"             { console.log("PRINT : "+ yytext); return 'TYPEOF'} 
+"toString"             { console.log("PRINT : "+ yytext); return 'TOSTRING'} 
 "if"               { console.log("IF : "+ yytext); return 'IF'}
 "switch"               { console.log("SWITCH : "+ yytext); return 'SWITCH'}
 "case"               { console.log("CASE : "+ yytext); return 'CASE'}
@@ -127,6 +134,7 @@ caracter     (\'({escape2}|{aceptada2})\')
     const primitivo = require('../Clases/Expresiones/Primitivo');
     const ValorDevuelto = require('../Clases/Expresiones/ValorDevuelto');
     const primitivoVector = require('../Clases/Expresiones/PrimitivoVector');
+    const primitivoFunc = require('../Clases/Expresiones/PrimitivoFunc');
 
     const ast = require('../Clases/Ast/Ast');
     const declaracion = require('../Clases/Instrucciones/Declaracion');
@@ -163,7 +171,7 @@ caracter     (\'({escape2}|{aceptada2})\')
 %}
 
 /* Precedencia de operadores de mayor a menor */
-
+%right 'ULTIM'
 %right 'INTERROGACION'
 %left 'OR'
 %left 'AND'
@@ -331,6 +339,17 @@ e :   e MAS e                   {$$ = new aritmetica.default($1, '+', $3, $1.fir
     //| incremento        {$$ = $1}
     | llamada                   {$$ = new ValorDevuelto.default($1, true,$1.first_line, $1.last_column);}
     | ID CORA e CORC                   {$$ = new primitivoVector.default($1, $3,$1.first_line, $1.last_column);}
+    | TOLOWER PARA e PARC       {$$ = new primitivoFunc.default( 0, $3, $1.first_line, $1.last_column);}
+    | TOUPPER PARA e PARC       {$$ = new primitivoFunc.default( 1, $3, $1.first_line, $1.last_column);}
+    | PARA INT PARC e  %prec ULTIM     {$$ = new primitivoFunc.default( 2, $4, $1.first_line, $1.last_column);}
+    | PARA DOUBLE PARC e   %prec ULTIM    {$$ = new primitivoFunc.default( 3, $4, $1.first_line, $1.last_column);}
+    | PARA STRING PARC e   %prec ULTIM    {$$ = new primitivoFunc.default( 4, $4, $1.first_line, $1.last_column);}
+    | PARA CHAR PARC e    %prec ULTIM   {$$ = new primitivoFunc.default( 5, $4, $1.first_line, $1.last_column);}
+    | LENGTH PARA e PARC                {$$ = new primitivoFunc.default( 6, $3, $1.first_line, $1.last_column);}
+    | TRUNCATE PARA e PARC              {$$ = new primitivoFunc.default( 7, $3, $1.first_line, $1.last_column);}        
+    | ROUND PARA e PARC                 {$$ = new primitivoFunc.default( 8, $3, $1.first_line, $1.last_column);}
+    | TYPEOF PARA e PARC                {$$ = new primitivoFunc.default( 9, $3, $1.first_line, $1.last_column);}
+    | TOSTRING PARA e PARC              {$$ = new primitivoFunc.default( 10, $3, $1.first_line, $1.last_column);}
     ;
 
 incremento:  INCRE          {$$ = new aritmetica.default(new primitivo.default(0, 0,$1.first_line, $1.last_column),  '+', new primitivo.default(1, 0,$1.first_line, $1.last_column), $1.first_line, $1.last_column, false);}
