@@ -33,7 +33,7 @@ export default class Asignacion implements Instruccion{
             let tipo_valor = this.valor.getTipo(controlador,ts)
             //TODO: Validar si son del mismo tipo
            // if(valor instanceof Primitivo){
-                if((tipo_valor == ts.getSimbolo(this.identificador.toLowerCase()).tipo.type) || (ts.getSimbolo(this.identificador.toLowerCase()).tipo.type == tipo.ENTERO && tipo_valor == tipo.DOBLE) /**|| (tipo_valor == tipo.CARACTER && ts.getSimbolo(this.identificador).tipo.type == tipo.CADENA)**/){
+                if((tipo_valor == ts.getSimbolo(this.identificador.toLowerCase()).tipo.type) || (ts.getSimbolo(this.identificador.toLowerCase()).tipo.type == tipo.DOBLE && tipo_valor == tipo.ENTERO) /**|| (tipo_valor == tipo.CARACTER && ts.getSimbolo(this.identificador).tipo.type == tipo.CADENA)**/){
                     ts.getSimbolo(this.identificador.toLowerCase()).setValor(valor);
                 }else{
                     let error = new Errores('Semantico', `error al re-asignar, los tipos del valor ${this.identificador} y la variable no coinciden.`, this.linea, this.columna);

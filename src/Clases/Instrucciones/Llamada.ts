@@ -56,7 +56,10 @@ export default class Llamada implements Instruccion{
 
                     
         }else{
-            //TODO: reportar error semantico
+            let error = new Errores('Semantico', `La funcion o metodo ${this.identificador} no existe `, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`La funcion o metodo ${this.identificador} no existe `+ "Linea: " +this.linea );
+            return null;
         }
         return null
     }
