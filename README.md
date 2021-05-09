@@ -1,1 +1,1 @@
-Creditos Para mi Sandra mi auxiliar
+Creditos Para Sandra mi auxiliar
